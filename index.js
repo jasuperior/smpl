@@ -69,7 +69,7 @@ Array.prototype.split = function split ( value ) {
         .reduce((a,b)=>{ return a.concat(b)})
 }
 Array.prototype.toRegExp = function toRegExp () {
-    console.log("we are calling this", this)
+    // console.log("we are calling this", this)
     var delims = [];
     var result =  this.map(function(v){
     if( v === "$...$" ) return "+";
@@ -88,7 +88,7 @@ Array.prototype.toRegExp = function toRegExp () {
     if(v.source == "\\s*")
         return v;
     if(v.captured){
-        console.log(_types[v.key])
+        // console.log(_types[v.key])
         return new RegExp(`(${_types[v.key].source})`)
     }
         return new RegExp(`(${v.source})`);
@@ -424,7 +424,7 @@ Compiler.prototype.compile = function compile ( input ) {
             program.unscan();
             var pattern =  reg.rule.toRegExp();
             var result = pattern.scan(program);
-            console.log("POSITIVE PATTERN::::", pos, pattern, result);
+            // console.log("POSITIVE PATTERN::::", pos, pattern, result);
             /*console.log("we matched:::", pattern)*/
             var toReplace = result.value.replace(pattern, typeof reg.expression == "function"?reg.expression.bind(result.value):reg.expression);
             /*console.log("RESULTS AND ", result.value,"::::::", toReplace);*/
@@ -436,7 +436,7 @@ Compiler.prototype.compile = function compile ( input ) {
             /*console.log(reg.rule)*/
             reg.rule.forEach(function(v){
                 if(v.expression){
-                    console.log("v has an expression", v);
+                    // console.log("v has an expression", v);
                     var global_reg = new RegExp(v.orig.source, "g");
                     input = input.replace(global_reg, typeof v.expression == "function"?v.expression.bind(input):v.expression)
                 }
@@ -471,6 +471,9 @@ Compiler.prototype.addType = function addType ( name, pattern, transform ) {
             var value = pat.rule.toRegExp();
             value.expression = pat.expression;
             value.orig = value;
+            value.captured = true;
+            value.key = name;
+            // console.log("We are in a type", value)
             if(Object.keys(pat.rule.variables).length)
                 value.vars = Object.keys(pat.rule.variables);
             return value;
