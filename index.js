@@ -558,7 +558,7 @@ function runs () {
 welcome jamel home;
 jamel runs home;
 let jam = (a,b,c)=>{a+b+c};
-let stupid = with me;
+let stupid = go with me;
 go with me
 go with jamel
 `));
