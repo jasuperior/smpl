@@ -425,6 +425,7 @@ Compiler.prototype.compile = function compile ( input ) {
             var pattern =  reg.rule.toRegExp();
             var result = pattern.scan(program);
             // console.log("POSITIVE PATTERN::::", pos, pattern, result);
+            // console.log(reg.rule)
             /*console.log("we matched:::", pattern)*/
             var toReplace = result.value.replace(pattern, typeof reg.expression == "function"?reg.expression.bind(result.value):reg.expression);
             /*console.log("RESULTS AND ", result.value,"::::::", toReplace);*/
@@ -439,6 +440,14 @@ Compiler.prototype.compile = function compile ( input ) {
                     // console.log("v has an expression", v);
                     var global_reg = new RegExp(v.orig.source, "g");
                     input = input.replace(global_reg, typeof v.expression == "function"?v.expression.bind(input):v.expression)
+                }
+                if(v.vars){
+                    input = input.replace(_types[v.key], typeof v.expression == "function"?v.expression.bind(toReplace):v.expression)
+                    // v.vars.forEach(function(variable){
+                    //     var type = _types[variable.type].source;
+                    //     var global_reg = new RegExp(type, "g");
+                    //     input = input.replace(global_reg, typeof v.expression == "function"?v.expression.bind(input):v.expression);
+                    // })
                 }
             });
             this.pos = pos;
@@ -469,13 +478,20 @@ Compiler.prototype.addType = function addType ( name, pattern, transform ) {
     Object.defineProperty(_types, name, {
         get: function () {
             var value = pat.rule.toRegExp();
-            value.expression = pat.expression;
+            value.expression = pat.expression
             value.orig = value;
             value.captured = true;
             value.key = name;
             // console.log("We are in a type", value)
-            if(Object.keys(pat.rule.variables).length)
-                value.vars = Object.keys(pat.rule.variables);
+            if(Object.keys(pat.rule.variables).length){
+                value.vars = true;
+                value.expression = function(){
+                    // var vars = Object.keys(pat.rule.variables).map((key)=>{ return pat.rule.variables[key] }).map((obj)=>{ return _types[obj.type] });
+                    console.log("the arguments:::", this, value)
+                    pat.expression;
+                    return this.match(_types[value.key])[0].replace(_types[value.key], pat.expression)
+                };
+            }
             return value;
         },
         enumerable: true
@@ -531,7 +547,7 @@ a.addPattern("let $name:lit = $ex:expr", "let('$name', $ex)");
 a.addType("salutation","with me", "no way");
 a.addType("greet","with $va:variable", "do_another($va)");
 a.addPattern("go $ss:salutation","do_nothing($ss)");
-a.addPattern("go $ss:greet","do_something($ss)");
+a.addPattern("go $ss:greet","do_something($ss)")
 // a.addPattern("hello $other:group", "group($other)")
 console.log(a.compile(`var jamel = 10 ;
     hello jamel;
