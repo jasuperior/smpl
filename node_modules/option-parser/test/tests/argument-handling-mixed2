@@ -1,0 +1,7 @@
+#!test/run-single-test -bro=bro
+Boolean
+Required: o=bro
+getopt:
+    b: false
+    r: o=bro
+unparsed:

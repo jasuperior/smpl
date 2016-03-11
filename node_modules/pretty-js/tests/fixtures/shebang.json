@@ -1,0 +1,4 @@
+{
+    "input": "#!/usr/bin/env node\n'use strict';console.log('hi');",
+    "output": "#!/usr/bin/env node\n\"use strict\";\n\nconsole.log(\"hi\");"
+}

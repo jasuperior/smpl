@@ -1,0 +1,9 @@
+#!test/run-single-test -u=uu -u uu
+getopt:
+unparsed:
+    - -u
+    - -=
+    - -u
+    - -u
+    - -u
+    - uu

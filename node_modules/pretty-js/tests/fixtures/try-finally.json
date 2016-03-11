@@ -1,0 +1,4 @@
+{
+    "input": "try{a=true;}finally{a=false;}b();",
+    "output": "try {\n    a = true;\n} finally {\n    a = false;\n}\n\nb();"
+}

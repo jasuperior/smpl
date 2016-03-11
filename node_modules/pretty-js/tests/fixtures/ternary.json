@@ -1,0 +1,4 @@
+{
+    "input": "a = b ? -1 : 1;c = !d?\"Yeah\":false",
+    "output": "a = b ? -1 : 1;\nc = !d ? \"Yeah\" : false"
+}

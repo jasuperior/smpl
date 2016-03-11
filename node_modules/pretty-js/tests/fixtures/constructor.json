@@ -1,0 +1,4 @@
+{
+    "input": "x.constructor.prop=true",
+    "output": "x.constructor.prop = true"
+}

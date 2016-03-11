@@ -1,0 +1,4 @@
+{
+    "input": "if(a)d();else if(e)f();else g();h();",
+    "output": "if (a) d();\nelse if (e) f();\nelse g();\nh();"
+}

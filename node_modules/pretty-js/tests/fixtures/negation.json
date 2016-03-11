@@ -1,0 +1,4 @@
+{
+    "input": "a=!a;a=!(a);b(a,!a,!!a);",
+    "output": "a = !a;\na = !(a);\nb(a, !a, !!a);"
+}

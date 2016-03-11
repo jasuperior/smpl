@@ -1,0 +1,25 @@
+.DS_Store
+._*
+.Trash*
+$*
+
+# Backup files
+*.sw[g-p]
+*.bak
+*~
+*#
+
+# IDEs
+*.as3proj
+.buildpath
+.c9revisions/
+.cproject
+.project
+.idea/
+.settings*
+.metadata/
+nbproject/
+
+# Generated
+/benchmarks/results.csv
+/node_modules/

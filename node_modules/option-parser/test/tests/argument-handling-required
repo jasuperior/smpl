@@ -1,0 +1,8 @@
+#!test/run-single-test -r=rr -r rr
+Required: rr
+Required: rr
+getopt:
+    r:
+        - rr
+        - rr
+unparsed:

@@ -1,0 +1,23 @@
+#!test/run-single-test --help
+Usage:
+    test-executor [options]
+
+Available Options:
+-b, --boolean   Boolean flag
+-h, -?, --help  This help message
+--lowercase STRING
+                Only allows lowercase values
+-m, -M, -9, --many-ways, --multitude
+                Option can be used many ways
+-o, --optional[=VALUE]
+                Optional argument
+-r, --required DATA
+                Required argument
+-s              This option should just barely wrap-around-to-the-next-line-bu
+                t-it-should-chop-this-super-long-word up.
+-w, -W, --wrapping-of-long-description
+                This is a very long description of an option.  It ensures
+                that the text will wrap around and around.  By forcing it to
+                be extremely long we can confirm that implementations perform
+                the proper wrapping and line breaks in the right
+                locations.

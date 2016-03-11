@@ -1,0 +1,7 @@
+{
+    "input": "x={'a b': true,'c':[1,2,3],d:[],e:{f:true,\"case\":null},f:{},g:h?i:j,'k-l':m-n};",
+    "options": {
+        "convertStrings": false
+    },
+    "output": "x = {\n    'a b': true,\n    c: [\n        1,\n        2,\n        3\n    ],\n    d: [],\n    e: {\n        f: true,\n        \"case\": null\n    },\n    f: {},\n    g: h ? i : j,\n    'k-l': m - n\n};"
+}

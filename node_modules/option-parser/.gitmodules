@@ -1,0 +1,3 @@
+[submodule "test"]
+	path = test
+	url = http://github.com/tests-always-included/option-parser-tests.git

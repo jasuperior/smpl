@@ -1,0 +1,4 @@
+{
+    "input": "if(a||b||c){d();}else if(e){f();}else{g();}",
+    "output": "if (a || b || c) {\n    d();\n} else if (e) {\n    f();\n} else {\n    g();\n}"
+}

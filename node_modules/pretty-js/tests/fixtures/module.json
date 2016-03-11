@@ -1,0 +1,4 @@
+{
+    "input": "/*global document, jQuery*/(function(w,d,$){'use strict';$.fn.self=function(){return this}}(this,document,jQuery));",
+    "output": "/*global document, jQuery*/\n(function (w, d, $) {\n    \"use strict\";\n\n    $.fn.self = function () {\n        return this\n    }\n}(this, document, jQuery));"
+}

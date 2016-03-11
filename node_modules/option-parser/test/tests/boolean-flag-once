@@ -1,0 +1,5 @@
+#!test/run-single-test -b
+Boolean
+getopt:
+    b: false
+unparsed:

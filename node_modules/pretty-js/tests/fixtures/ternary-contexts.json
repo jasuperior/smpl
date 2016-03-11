@@ -1,0 +1,4 @@
+{
+    "input": "if(x){t=(m?'a':'b')}else t()",
+    "output": "if (x) {\n    t = (m ? \"a\" : \"b\")\n} else t()"
+}

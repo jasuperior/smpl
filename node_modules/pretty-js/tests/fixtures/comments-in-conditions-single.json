@@ -1,0 +1,4 @@
+{
+    "input": "if(!a||// one\nb==c)x();",
+    "output": "if (!a ||  // one\n    b == c) x();"
+}

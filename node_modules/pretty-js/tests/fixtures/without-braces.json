@@ -1,0 +1,7 @@
+{
+    "input": "a=function(b){var c,d;//comment\nif(b==='e')return f.g({h:i});else if(j()){//comment2\nk=[];return k;}return null;};",
+    "options": {
+        "convertStrings": false
+    },
+    "output": "a = function (b) {\n    var c, d;  //comment\n    if (b === 'e') return f.g({\n        h: i\n    });\n    else if (j()) {\n        //comment2\n        k = [];\n\n        return k;\n    }\n\n    return null;\n};"
+}

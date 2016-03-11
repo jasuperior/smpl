@@ -1,0 +1,18 @@
+#!/bin/bash
+
+ALL_PASS=true
+
+for TEST_FILE in test/tests/*; do
+    if ! $TEST_FILE; then
+        ALL_PASS=false
+    fi
+done
+
+echo ""
+
+if $ALL_PASS; then
+    echo "All tests pass"
+else
+    echo "Test run unsuccessful"
+    exit 1
+fi

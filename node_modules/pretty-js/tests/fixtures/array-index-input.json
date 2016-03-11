@@ -1,0 +1,7 @@
+{
+    "input": "x[2];x[2](true);x[1][2][3];function y(){return ['literal'];}y.zzz=function (){return this['a b'];}",
+    "options": {
+        "convertStrings": false
+    },
+    "output": "x[2];\nx[2](true);\nx[1][2][3];\n\nfunction y() {\n    return [\n        'literal'\n    ];\n}\n\ny.zzz = function () {\n    return this['a b'];\n}"
+}

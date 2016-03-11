@@ -1,0 +1,16 @@
+#!test/run-single-test -bbr=one -r two --boolean=yellow
+Boolean
+Boolean
+Required: one
+Required: two
+Boolean
+getopt:
+    b:
+        - false
+        - false
+    boolean: false
+    r:
+        - one
+        - two
+unparsed:
+    - =yellow

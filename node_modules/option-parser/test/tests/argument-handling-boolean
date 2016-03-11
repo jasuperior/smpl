@@ -1,0 +1,14 @@
+#!test/run-single-test -b=bb -b bb
+Boolean
+Boolean
+Boolean
+Boolean
+getopt:
+    b:
+        - false
+        - false
+        - false
+        - false
+unparsed:
+    - -=
+    - bb

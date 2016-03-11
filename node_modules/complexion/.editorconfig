@@ -1,0 +1,58 @@
+# This file is for unifying the coding style for different editors and IDEs
+# editorconfig.org
+
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[app/**.html]
+indent_style = space
+indent_size = 4
+
+[app/**.js]
+indent_style = space
+indent_size = 4
+
+[app/**.less]
+indent_style = space
+indent_size = 4
+
+[debug/**.css]
+indent_style = space
+indent_size = 4
+
+[debug/**.html]
+indent_style = space
+indent_size = 4
+
+[debug/**.js]
+indent_style = space
+indent_size = 4
+
+[doc/**.md]
+indent_style = space
+indent_size = 4
+
+[grunt/**.js]
+indent_style = space
+indent_size = 4
+
+[Gruntfile.js]
+indent_style = space
+indent_size = 4
+
+[lib/**.js]
+indent_style = space
+indent_size = 4
+
+[package.json]
+indent_style = space
+indent_size = 4
+
+[www/**.html]
+indent_style = space
+indent_size = 4

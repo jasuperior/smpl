@@ -1,0 +1,4 @@
+{
+    "input": "function a(i){for(i=0;i<3;i+=1){return y(\"i\"+i+\"i\"+(i+1)+\"i\").len();}",
+    "output": "function a(i) {\n    for (i = 0; i < 3; i += 1) {\n        return y(\"i\" + i + \"i\" + (i + 1) + \"i\").len();\n    }"
+}

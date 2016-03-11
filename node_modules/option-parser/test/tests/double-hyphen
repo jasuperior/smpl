@@ -1,0 +1,4 @@
+#!test/run-single-test -- -b
+getopt:
+unparsed:
+    - -b

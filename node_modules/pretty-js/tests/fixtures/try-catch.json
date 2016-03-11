@@ -1,0 +1,4 @@
+{
+    "input": "try{a=true;}catch(ex){a=false;}b();",
+    "output": "try {\n    a = true;\n} catch (ex) {\n    a = false;\n}\n\nb();"
+}

@@ -1,0 +1,4 @@
+{
+    "input": "x.toString()",
+    "output": "x.toString()"
+}

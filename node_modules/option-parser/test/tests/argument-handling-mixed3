@@ -1,0 +1,7 @@
+#!test/run-single-test -bo=rbor
+Boolean
+Optional: rbor
+getopt:
+    b: false
+    o: rbor
+unparsed:

@@ -1,0 +1,9 @@
+#!test/run-single-test -o=oo -o oo
+Optional: oo
+Optional parameter, no value
+getopt:
+    o:
+        - oo
+        - false
+unparsed:
+    - oo

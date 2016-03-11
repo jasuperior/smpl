@@ -1,0 +1,4 @@
+{
+    "input": "return f=w.n(),f[1]=s,w.run(),f;",
+    "output": "return f = w.n(),\n    f[1] = s,\n    w.run(),\n    f;"
+}

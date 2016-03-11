@@ -1,0 +1,4 @@
+{
+    "input": "{default:1,catch:1,toString:1}",
+    "output": "{\n    default: 1,\n    catch: 1,\n    toString: 1\n}"
+}

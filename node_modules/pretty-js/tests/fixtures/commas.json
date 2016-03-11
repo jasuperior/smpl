@@ -1,0 +1,4 @@
+{
+    "input": "var a,b,c,d;a=[1,2,3,4];b=function(c,d,e,f){}",
+    "output": "var a, b, c, d;\n\na = [\n    1,\n    2,\n    3,\n    4\n];\nb = function (c, d, e, f) {}"
+}

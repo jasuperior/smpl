@@ -1,0 +1,9 @@
+#!test/run-single-test -bor=bor
+Boolean
+Optional parameter, no value
+Required: bor
+getopt:
+    b: false
+    o: false
+    r: bor
+unparsed:

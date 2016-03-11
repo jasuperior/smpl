@@ -1,0 +1,4 @@
+{
+    "input": "function a(b){switch(b){case true:case false:break;case 'fdsa':return 1;default:console.log('hello');return;}}",
+    "output": "function a(b) {\n    switch (b) {\n        case true:\n        case false:\n            break;\n\n        case \"fdsa\":\n            return 1;\n\n        default:\n            console.log(\"hello\");\n\n            return;\n    }\n}"
+}
