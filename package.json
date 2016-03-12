@@ -1,22 +1,23 @@
 {
-  "name": "parser",
-  "version": "1.0.0",
+  "name": "smpl",
+  "version": "0.0.1",
   "description": "",
-  "main": "dsl.js",
+  "main": "lib/dsl.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "preferGlobal": true,
-  "bin" : {
-      smpl: "bin/index.js"
+  "bin": {
+    "smpl": "bin/index.js"
   },
-  "author": "",
+  "author": "ja.superior",
   "license": "ISC",
   "dependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-duration": "0.0.0",
     "gulp-fn": "0.0.0",
+    "pretty-js": "^0.1.8",
     "smpl-pstrscan": "0.0.1",
     "vorpal": "^1.10.8"
   }

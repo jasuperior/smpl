@@ -1,0 +1,103 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Users\\Jamel\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'publish',
+1 verbose cli   '--access=public' ]
+2 info using npm@2.15.0
+3 info using node@v5.7.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: 'C:\\wamp\\www\\Utils\\smpl',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory C:\Users\Jamel\AppData\Roaming\npm-cache\smpl\0.0.1\package.tgz not in flight; packing
+9 verbose correctMkdir C:\Users\Jamel\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+10 verbose tar pack [ 'C:\\Users\\Jamel\\AppData\\Roaming\\npm-cache\\smpl\\0.0.1\\package.tgz',
+10 verbose tar pack   'C:\\wamp\\www\\Utils\\smpl' ]
+11 verbose tarball C:\Users\Jamel\AppData\Roaming\npm-cache\smpl\0.0.1\package.tgz
+12 verbose folder C:\wamp\www\Utils\smpl
+13 info prepublish smpl@0.0.1
+14 verbose addLocalTarball adding from inside cache C:\Users\Jamel\AppData\Roaming\npm-cache\smpl\0.0.1\package.tgz
+15 verbose correctMkdir C:\Users\Jamel\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+16 silly cache afterAdd smpl@0.0.1
+17 verbose afterAdd C:\Users\Jamel\AppData\Roaming\npm-cache\smpl\0.0.1\package\package.json not in flight; writing
+18 verbose correctMkdir C:\Users\Jamel\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+19 verbose afterAdd C:\Users\Jamel\AppData\Roaming\npm-cache\smpl\0.0.1\package\package.json written
+20 silly publish { name: 'smpl',
+20 silly publish   version: '0.0.1',
+20 silly publish   description: 'smpl\r ====\r simplified modelling programming language\r ---\r ![smpl Logo](./smpl.logo.png)',
+20 silly publish   main: 'lib/dsl.js',
+20 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
+20 silly publish   preferGlobal: true,
+20 silly publish   bin: { smpl: 'bin/index.js' },
+20 silly publish   author: { name: 'ja.superior' },
+20 silly publish   license: 'ISC',
+20 silly publish   dependencies:
+20 silly publish    { gulp: '^3.9.1',
+20 silly publish      'gulp-concat': '^2.6.0',
+20 silly publish      'gulp-duration': '0.0.0',
+20 silly publish      'gulp-fn': '0.0.0',
+20 silly publish      'pretty-js': '^0.1.8',
+20 silly publish      'smpl-pstrscan': '0.0.1',
+20 silly publish      vorpal: '^1.10.8' },
+20 silly publish   readme: 'smpl\r\n====\r\nsimplified modelling programming language\r\n---\r\n![smpl Logo](./smpl.logo.png)\r\n\r\nsmpl (pronounced "simple") is a compiler which allows you to write your code the way you want. You define simple idioms that make sense to you, and use them to construct your code, then compile it down to your language of choice.\r\n\r\nIt\'s not just a simple compiler, because smpl makes no judgements of which language you will be targeting for your compile.  Compile it to C, Ruby, PHP, whatever, its up to you.\r\n\r\n> smpl as that!\r\n\r\n## Get Started\r\nsimply install the package globally to get the command line tool\r\n    npm install smpl -g\r\n    smpl --help\r\n\r\n## Syntax\r\nsmpl has a very small set of helper macros which you can use to construct your patterns.\r\n#### pattern ( input... ) => { output... }\r\nUsing the pattern macro,  you place the pattern you wish you match in parenthesis, and place how you want it to transform in the backets.\r\n\r\n    pattern ( hello world ) => { console.log("hello world") }\r\n    hello world\r\n    //compiles to console.log("hello world")\r\n#### pattern name (input) => { output }\r\nSometimes you want to use a pattern in another pattern. To do this you must name your pattern and use the expression variable `$name` denoted by a "$" symbol  followed by a color `:` and the name of your pattern. you can then use that value caught by your variable in your output\r\n\r\n    pattern name ( world ) => { world } //naive demonstration. simply being used  to demonstrate the point\r\n    pattern ( hello $name:name  ) => { console.log("hello $name") }\r\n    hello world\r\n    //outputs console.log("hello world");\r\n\r\nthere are a number of built in types which you can use out the gate.\r\n+ `lit`: matches a single literal identifier. ex. `hello` `world` `susan` `new` `var`\r\n+ `num`: matches a number. ex. `1` ` 2` `30` `540`\r\n+ `str`: matches a string. ex. `"hello world"` `\'hello world\'`\r\n+ `op`: matches an operator. ex `+` `-` `==` `=` `*`\r\n+ `punc`: matches a punctuator. ex `.` `;` `:` `,` `!`\r\n+ `comment`:  right now it only matches javascript style comments. (may extend it to `#` style comments in the future) ex. `\\\\comment` `\\* comment *\\`\r\n+ `func`: right now only supports javascript style function expressions and declarations. ex `function (){ ... }` `function name (){ }`\r\n+ `afunc`: javascript style arrow functions. ex `(x)=>x` `(x)=>{ return x }`\r\n+ `expr` : matches all of the above plus any patterns you define with a name.\r\n\r\nyou can use these helpers to help build up dynamic style patterns.\r\n\r\n    pattern hello ( hello $name:lit ) => { hello("$name") }\r\n    pattern greeting ( $hello:hello , welcome to my $place:lit ) => { welcome($hello, $place ) }\r\n    hello steven //compiles to hello("steven")\r\n    hello beth, welcome to my home //compiles to welcome(hello("beth"), home)\r\nas you can see, nested patterns compile to their own outputs once they are placed.\r\n#### capture name ( input ) => { output }\r\nAlong with named patterns, you can also define places where you dont want to to necessarily transform the data, merely capture something about it. Thats where the captuere macro comes along. Use the above syntax to capture data to be used in a pattern later. For instance, you may want to capture all of the variable names you declare in your document, and use them in specific patterns later.\r\n\r\nIn fact, lets use that example to construct a new hello world, where the only input it will allow is the names of variables that i\'ve declared.\r\n\r\n    capture var ( var $name:lit ) => { $name }\r\n    pattern ( hello $name:var ) => { hello("$name") }\r\n\r\n    hello james // compiles to hello james\r\n    var james = true;\r\n    hello james //compiles to hello("james")\r\n\r\n## Command Line Tool\r\nOnce you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`\r\n#### smpl compile [dir]  [options]\r\ncompile is your entry point. you can simply use the `smpl compile` command along with input glob to parse your files.\r\n\r\n    $  smpl compile ./example/*.example\r\n\r\noptionally you can use `c` or `p`\r\n\r\n    $  smpl c ./example/*.example\r\n\r\nthis will simply compile your file  into a javascript file in the same directory.  You can also optionally specify different options to alter your results.\r\n\r\n#### options\r\n##### --extension ||  -e\r\nYou can use the extension\'s flag to change the file type of your outputs\r\n\r\n    $   smpl c ./example/*.example  -e .cpp\r\n\r\nwill output a c++ files from your .example\'s\r\n##### --output || -o\r\nSpecify an output directory\r\n\r\n    $   smpl c ./example/*.example -o ./build\r\n\r\n##### --module || -m\r\nSometimes you may want to seperate your patterns from your working documents. If you have done that, you can specify the document with your patterns using the `-m` flag\r\n\r\n    $   smpl c ./example/*.example -m patterns.js -o ./build\r\n\r\n##### --concat || -c\r\nif you would like your output to be in a single file, use the `-c` flag to join them together.\r\n\r\n    $   smpl c ./example/*.example -c example.js -o ./build\r\n\r\n#### smpl --help\r\nuse the help flag after any argument to get an overview of all of the arguments you can use.\r\n\r\n    $    smpl --help\r\n\r\n    Invalid Command. Showing Help:\r\n\r\n    Commands:\r\n\r\n    help [command...]        Provides help for a given command.\r\n    exit                     Exits application.\r\n    compile [options] <dir>  Parses the files at the given directory (node glob)\r\n\r\n\r\n\r\n## Be Aware\r\nThis is still in Pre-Alpha stage. I literally built this in a couple days, so i would\'nt recommend using it in production just yet. I havent even written any tests for it yet. So, use at your own risk.\r\n\r\nThat being said, contribute to your hearts desire, I am always open to new ideas and ways in which we can improve this library.  Drop any issues, updates, ideas, etc. in the issues of the git repo and I\'ll try my best to address it in a timely fashion.\r\n',
+20 silly publish   readmeFilename: 'README.md',
+20 silly publish   gitHead: 'd176e64e7177c68e7c24fc320701af3e95517bf8',
+20 silly publish   _id: 'smpl@0.0.1',
+20 silly publish   _shasum: '69e2c78390ec1201f89759012d047f87810bcdc5',
+20 silly publish   _from: '.' }
+21 verbose getPublishConfig undefined
+22 silly mapToRegistry name smpl
+23 silly mapToRegistry using default registry
+24 silly mapToRegistry registry https://registry.npmjs.org/
+25 silly mapToRegistry uri https://registry.npmjs.org/smpl
+26 verbose publish registryBase https://registry.npmjs.org/
+27 silly publish uploading C:\Users\Jamel\AppData\Roaming\npm-cache\smpl\0.0.1\package.tgz
+28 verbose request uri https://registry.npmjs.org/smpl
+29 verbose request sending authorization for write operation
+30 info attempt registry request try #1 at 3:08:01 PM
+31 verbose request using bearer token for auth
+32 verbose request id ca0aec9727c43913
+33 http request PUT https://registry.npmjs.org/smpl
+34 http 403 https://registry.npmjs.org/smpl
+35 verbose headers { 'content-type': 'application/json',
+35 verbose headers   'cache-control': 'max-age=300',
+35 verbose headers   'content-length': '96',
+35 verbose headers   'accept-ranges': 'bytes',
+35 verbose headers   date: 'Sat, 12 Mar 2016 20:08:14 GMT',
+35 verbose headers   via: '1.1 varnish',
+35 verbose headers   connection: 'keep-alive',
+35 verbose headers   'x-served-by': 'cache-iad2126-IAD',
+35 verbose headers   'x-cache': 'MISS',
+35 verbose headers   'x-cache-hits': '0',
+35 verbose headers   'x-timer': 'S1457813294.245324,VS0,VE302' }
+36 verbose request invalidating C:\Users\Jamel\AppData\Roaming\npm-cache\registry.npmjs.org\smpl on PUT
+37 error publish Failed PUT 403
+38 verbose stack Error: You do not have permission to publish 'smpl'. Are you logged in as the correct user? : smpl
+38 verbose stack     at makeError (C:\Users\Jamel\AppData\Roaming\npm\node_modules\npm\node_modules\npm-registry-client\lib\request.js:264:12)
+38 verbose stack     at CachingRegistryClient.<anonymous> (C:\Users\Jamel\AppData\Roaming\npm\node_modules\npm\node_modules\npm-registry-client\lib\request.js:252:14)
+38 verbose stack     at Request._callback (C:\Users\Jamel\AppData\Roaming\npm\node_modules\npm\node_modules\npm-registry-client\lib\request.js:172:14)
+38 verbose stack     at Request.self.callback (C:\Users\Jamel\AppData\Roaming\npm\node_modules\npm\node_modules\request\request.js:199:22)
+38 verbose stack     at emitTwo (events.js:100:13)
+38 verbose stack     at Request.emit (events.js:185:7)
+38 verbose stack     at Request.<anonymous> (C:\Users\Jamel\AppData\Roaming\npm\node_modules\npm\node_modules\request\request.js:1036:10)
+38 verbose stack     at emitOne (events.js:95:20)
+38 verbose stack     at Request.emit (events.js:182:7)
+38 verbose stack     at IncomingMessage.<anonymous> (C:\Users\Jamel\AppData\Roaming\npm\node_modules\npm\node_modules\request\request.js:963:12)
+39 verbose statusCode 403
+40 verbose pkgid smpl
+41 verbose cwd C:\wamp\www\Utils\smpl
+42 error Windows_NT 10.0.10586
+43 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\Jamel\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js" "publish" "--access=public"
+44 error node v5.7.0
+45 error npm  v2.15.0
+46 error code E403
+47 error You do not have permission to publish 'smpl'. Are you logged in as the correct user? : smpl
+48 error If you need help, you may report this error at:
+48 error     <https://github.com/npm/npm/issues>
+49 verbose exit [ 1, true ]

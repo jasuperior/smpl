@@ -4,7 +4,7 @@ var gulp = require("gulp");
 var concat = require("gulp-concat");
 var duration = require("gulp-duration");
 var fn = require("gulp-fn");
-var compiler = require("./dsl.js");
+var compiler = require("../lib/dsl.js");
 var fs = require("fs");
 /*var start = new Date();*/
 process.on('SIGINT', function (){ process.exit(2) });
