@@ -1,6 +1,6 @@
 {
-  "name": "smpl",
-  "version": "0.0.1",
+  "name": "smpl.js",
+  "version": "0.0.3",
   "description": "",
   "main": "lib/dsl.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "bin": {
     "smpl": "bin/index.js"
   },
-  "author": "ja.superior",
+  "author": "ja.x",
   "license": "ISC",
   "dependencies": {
     "gulp": "^3.9.1",
@@ -20,5 +20,13 @@
     "pretty-js": "^0.1.8",
     "smpl-pstrscan": "0.0.1",
     "vorpal": "^1.10.8"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jasuperior/smpl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jasuperior/smpl/issues"
+  },
+  "homepage": "https://github.com/jasuperior/smpl"
 }

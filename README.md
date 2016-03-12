@@ -1,6 +1,5 @@
-smpl
-====
-simplified modelling programming language
+# smpl
+## simplified modelling programming language
 ---
 ![smpl Logo](./smpl.logo.png)
 
@@ -12,6 +11,7 @@ It's not just a simple compiler, because smpl makes no judgements of which langu
 
 ## Get Started
 simply install the package globally to get the command line tool
+
     npm install smpl -g
     smpl --help
 
