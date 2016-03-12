@@ -2,9 +2,13 @@
   "name": "parser",
   "version": "1.0.0",
   "description": "",
-  "main": "tokenizer.js",
+  "main": "dsl.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "preferGlobal": true,
+  "bin" : {
+      smpl: "bin/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +17,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-duration": "0.0.0",
     "gulp-fn": "0.0.0",
+    "smpl-pstrscan": "0.0.1",
     "vorpal": "^1.10.8"
   }
 }
