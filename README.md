@@ -17,13 +17,13 @@ simply install the package globally to get the command line tool
 
 ## Syntax
 smpl has a very small set of helper macros which you can use to construct your patterns.
-#### pattern ( input... ) => { output... }
+#### `pattern ( input... ) => { output... }`
 Using the pattern macro,  you place the pattern you wish you match in parenthesis, and place how you want it to transform in the backets.
 
     pattern ( hello world ) => { console.log("hello world") }
     hello world
     //compiles to console.log("hello world")
-#### pattern name (input) => { output }
+#### `pattern name (input) => { output }`
 Sometimes you want to use a pattern in another pattern. To do this you must name your pattern and use the expression variable `$name` denoted by a "$" symbol  followed by a color `:` and the name of your pattern. you can then use that value caught by your variable in your output
 
     pattern name ( world ) => { world } //naive demonstration. simply being used  to demonstrate the point
@@ -49,7 +49,7 @@ you can use these helpers to help build up dynamic style patterns.
     hello steven //compiles to hello("steven")
     hello beth, welcome to my home //compiles to welcome(hello("beth"), home)
 as you can see, nested patterns compile to their own outputs once they are placed.
-#### capture name ( input ) => { output }
+####` capture name ( input ) => { output }`
 Along with named patterns, you can also define places where you dont want to to necessarily transform the data, merely capture something about it. Thats where the captuere macro comes along. Use the above syntax to capture data to be used in a pattern later. For instance, you may want to capture all of the variable names you declare in your document, and use them in specific patterns later.
 
 In fact, lets use that example to construct a new hello world, where the only input it will allow is the names of variables that i've declared.
