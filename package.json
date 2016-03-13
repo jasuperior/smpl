@@ -17,6 +17,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-duration": "0.0.0",
     "gulp-fn": "0.0.0",
+    "gulp-watch": "^4.3.5",
     "pretty-js": "^0.1.8",
     "progress": "^1.1.8",
     "smpl-pstrscan": "0.0.1",

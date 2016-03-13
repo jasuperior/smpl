@@ -3,6 +3,7 @@ var v = require("vorpal")();
 var gulp = require("gulp");
 var concat = require("gulp-concat");
 var duration = require("gulp-duration");
+var watch = require("gulp-watch")
 var fn = require("gulp-fn");
 var compiler = require("../lib/dsl.js");
 var fs = require("fs");
@@ -15,6 +16,7 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
     .option("-m, --module <dir>", "add a module to the pipeline")
     .option("-c, --concat", "concatenate files into single filename provided")
     .option("-e --extension <ex>","change the file extension to the one provided")
+    .option("-w --watch", "watches the files at the given input directory")
     .action(function(a,cb){
         var d = duration("Compile Finished in");
         var loadModules = duration("Added Modules: ");
@@ -31,7 +33,9 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
         }else {
             var converted = gulp.src(dir)
         }
-
+        if(a.options.watch) {
+            converted = converted.pipe(watch(a.dir))
+        }
         converted.pipe(fn(function( file ){
             var str = file.contents.toString('utf8');
             var content = compiler.compile(str); ++num;
