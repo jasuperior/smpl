@@ -69,7 +69,7 @@ Some patterns may require you match things in repeated succession. For these pat
 
 you can also change the delimiter in the output if you'd like, by using the `()...` syntax in the output.
 
-    pattern { hello $name:lit(  )... } => { hello([$name(,)...])} //notice that whitespace as a delim is marked by an empty paren
+    pattern { hello $name:lit( )... } => { hello([$name(,)...])} //notice that whitespace as a delim is marked by an empty paren
 
     hello world moon sun; //compiles to hello([ world, moon, sun ]);
 
