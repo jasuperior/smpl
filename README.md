@@ -1,7 +1,7 @@
-# smpl
-### simplified modelling programming language
+# <cetner>smpl</center>
+### <center>simplified modelling programming language</center>
 
-![smpl Logo](./smpl.logo.png)
+<center>![smpl Logo](./smpl.logo.png)</center>
 
 smpl (pronounced "simple") is a compiler which allows you to write your code the way you want. You define simple idioms that make sense to you, and use them to construct your code, then compile it down to your language of choice.
 
