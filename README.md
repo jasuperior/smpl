@@ -61,6 +61,18 @@ In fact, lets use that example to construct a new hello world, where the only in
     var james = true;
     hello james //compiles to hello("james")
 
+#### SPECIAL MENTION: `...` The ellipses
+Some patterns may require you match things in repeated succession. For these patterns use the ellipses. It denotes that you would like the pattern or token before it, to be repeated one or many times. It uses the syntax `$variable:type (delimiter)...`.
+
+    pattern { hello $name:lit( ,)... } => { hello([$name])}
+    hello world, moon, sun; //compiles to hello([ world, moon, sun ]);
+
+you can also change the delimiter in the output if you'd like, by using the `()...` syntax in the output.
+
+    pattern { hello $name:lit(  )... } => { hello([$name(,)...])} //notice that whitespace as a delim is marked by an empty paren
+
+    hello world moon sun; //compiles to hello([ world, moon, sun ]);
+
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
 #### smpl compile [dir]  [options]
