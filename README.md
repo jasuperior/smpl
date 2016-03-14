@@ -42,9 +42,9 @@ there are a number of built in types which you can use out the gate.
 + `func`: right now only supports javascript style function expressions and declarations. ex `function (){ ... }` `function name (){ }`
 + `afunc`: javascript style arrow functions. ex `(x)=>x` `(x)=>{ return x }`
 + `expr` : matches all of the above plus any patterns you define with a name.
-+ `curly`: matches anything within curly cancelling curly braces. ex. `{ s... }` `{ { {}}{...}}`
-+ `paren`: matches anything within curly cancelling parentheses. ex. `( s... )` `(()(...))`
-+ `brack`: matches anything within curly cancelling square brackets. ex. `[...]` `[[],[...]]`
++ `curly`: matches anything within cancelling curly braces. ex. `{ s... }` `{ { {}}{...}}`
++ `paren`: matches anything within cancelling parentheses. ex. `( s... )` `(()(...))`
++ `brack`: matches anything within cancelling square brackets. ex. `[...]` `[[],[...]]`
 + `group`: matches either curly, paren, or brack.
 
 you can use these helpers to help build up dynamic style patterns.
