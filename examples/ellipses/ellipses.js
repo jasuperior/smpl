@@ -7,3 +7,7 @@ hello([
 hello([
 	world
 ])  //should compiler to hello([world])
+hello([
+	world,
+	moon
+])  //should compiler to hello([world])

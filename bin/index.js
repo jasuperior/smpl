@@ -22,12 +22,12 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
     .action(function(a,cb){
         var d = duration("Compile Finished in");
         var loadModules = duration("Added Modules: ");
-        var dir = a.dir, output = a.options.output || "./", modules = a.options.module, num = 0;
-        // console.log(a.options.output )
+        var dir = a.dir, output = a.options.output || a.dir.replace(/(\\|\/)?(\*\*)?(\\|\/)(\*\.[\w_-]+)/, ""), modules = a.options.module, num = 0;
+        console.log( output )
         if(modules && !Array.isArray(modules)) modules = [modules];
         if(modules) modules.forEach(function(value){
                 var file = fs.readFileSync(value, "utf8");
-                compiler.compile(file);
+                compiler.compile(file, true);
         }.bind(this))
         if(modules){
             var converted = gulp.src(dir)
@@ -46,6 +46,7 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
             var content = compiler.compile(str); ++num;
             file.contents = new Buffer(content);
             file.path = file.path.replace(/\.\w+$/, a.options.extension||".js");
+            console.log(file.path);
             compiler.clear();
             return file;
         }));
