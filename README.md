@@ -10,7 +10,7 @@ It's not just a simple compiler, because smpl makes no judgements of which langu
 > smpl as that!
 
 ## Get Started
-simply install the package globally to get the command line tool
+Simply install the package globally to get the command line tool
 
     npm install smpl.js -g
     smpl --help
@@ -18,13 +18,13 @@ simply install the package globally to get the command line tool
 ## Syntax
 smpl has a very small set of helper macros which you can use to construct your patterns.
 #### `pattern ( input... ) => { output... }`
-Using the pattern macro,  you place the pattern you wish you match in parenthesis, and place how you want it to transform in the backets.
+Using the pattern macro,  you place the pattern you want to match in parenthesis, and place how you want it to transform in the brackets.
 
     pattern ( hello world ) => { console.log("hello world") }
     hello world
     //compiles to console.log("hello world")
 #### `pattern name (input) => { output }`
-Sometimes you want to use a pattern in another pattern. To do this you must name your pattern and use the expression variable `$name` denoted by a "$" symbol  followed by a color `:` and the name of your pattern. you can then use that value caught by your variable in your output
+Sometimes you want to use a pattern in another pattern. To do this you must name your pattern and use the expression variable `$name` denoted by a "$" symbol  followed by a colon `:` and the name of your pattern. you can then use that value caught by your variable in your output
 
     pattern name ( world ) => { world } //naive demonstration. simply being used  to demonstrate the point
     pattern ( hello $name:name  ) => { console.log("hello $name") }
@@ -50,7 +50,7 @@ you can use these helpers to help build up dynamic style patterns.
     hello beth, welcome to my home //compiles to welcome(hello("beth"), home)
 as you can see, nested patterns compile to their own outputs once they are placed.
 ####` capture name ( input ) => { output }`
-Along with named patterns, you can also define places where you dont want to to necessarily transform the data, merely capture something about it. Thats where the captuere macro comes along. Use the above syntax to capture data to be used in a pattern later. For instance, you may want to capture all of the variable names you declare in your document, and use them in specific patterns later.
+Along with named patterns, you can also define places where you don't want to to necessarily transform the data, merely capture something about it. Thats where the capture macro comes along. Use the above syntax to capture data to be used in a pattern later. For instance, you may want to capture all of the variable names you declare in your document, and use them in specific patterns later.
 
 In fact, lets use that example to construct a new hello world, where the only input it will allow is the names of variables that i've declared.
 
@@ -84,7 +84,7 @@ optionally you can use `c` or `p`
 
     $  smpl c ./example/*.example
 
-this will simply compile your file  into a javascript file in the same directory.  You can also optionally specify different options to alter your results.
+this will simply compile your file into a javascript file in the same directory.  You can also optionally specify different options to alter your results.
 
 #### options
 ##### --extension ||  -e
@@ -99,7 +99,7 @@ Specify an output directory
     $   smpl c ./example/*.example -o ./build
 
 ##### --module || -m
-Sometimes you may want to seperate your patterns from your working documents. If you have done that, you can specify the document with your patterns using the `-m` flag
+Sometimes you may want to separate your patterns from your working documents. If you have done that, you can specify the document with your patterns using the `-m` flag
 
     $   smpl c ./example/*.example -m patterns.js -o ./build
 
@@ -109,7 +109,7 @@ if you would like your output to be in a single file, use the `-c` flag to join 
     $   smpl c ./example/*.example -c example.js -o ./build
 
 #### smpl --help
-use the help flag after any argument to get an overview of all of the arguments you can use.
+Use the help flag after any argument to get an overview of all of the arguments you can use.
 
     $    smpl --help
 
@@ -124,6 +124,6 @@ use the help flag after any argument to get an overview of all of the arguments 
 
 
 ## Be Aware
-This is still in Pre-Alpha stage. I literally built this in a couple days, so i would'nt recommend using it in production just yet. I havent even written any tests for it yet. So, use at your own risk.
+This is still in Pre-Alpha stage. I literally built this in a couple days, so i wouldn't recommend using it in production just yet. I haven't even written any tests for it yet. So, use at your own risk.
 
 That being said, contribute to your hearts desire, I am always open to new ideas and ways in which we can improve this library.  Drop any issues, updates, ideas, etc. in the issues of the git repo and I'll try my best to address it in a timely fashion.
