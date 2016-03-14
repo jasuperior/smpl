@@ -46,7 +46,7 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
             var content = compiler.compile(str); ++num;
             file.contents = new Buffer(content);
             file.path = file.path.replace(/\.\w+$/, a.options.extension||".js");
-            console.log(file.path);
+            console.log("Compile Finished:: ", file.path);
             compiler.clear();
             return file;
         }));

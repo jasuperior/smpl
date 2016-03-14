@@ -1,17 +1,9 @@
-capture verb ( function $name:lit ) => { $name }
-capture noun ( var $name:lit ) => { $name }
-patterns clause {
-    ( not $person:lit ) => { not($person) }
-    ( $verb:verb $noun:noun ) => { uh uh }
-    ( $noun:noun $verb:verb  ) => { true }
-    ( no people ) => { no }
+patterns greetings {
+    (hello $name:lit ) => { hello($name) }
+    (welcome $name:lit ) => { hello($name) }
+    (goodbye $name:lit ) => { bye($name, true) }
 }
-pattern ( because $sent:clause ) => { why($sent) }
-
-
-because not veronica;
-var jamel = 10;
-function run () { }
-because jamel run ;
-because run jamel;
-because no people;
+pattern (say $greet:greetings ) => { say($greet) }
+say hello mary;
+say welcome josh;
+goodbye mabelle;

@@ -1,8 +1,3 @@
-why(not(veronica));
-var jamel = 10;
-
-function run() {}
-
-why(true);
-why(uh uh);
-why(no);
+say(hello(mary));
+say(hello(josh));
+bye(mabelle, true);

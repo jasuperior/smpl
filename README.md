@@ -42,6 +42,10 @@ there are a number of built in types which you can use out the gate.
 + `func`: right now only supports javascript style function expressions and declarations. ex `function (){ ... }` `function name (){ }`
 + `afunc`: javascript style arrow functions. ex `(x)=>x` `(x)=>{ return x }`
 + `expr` : matches all of the above plus any patterns you define with a name.
++ `curly`: matches anything within curly cancelling curly braces. ex. `{ s... }` `{ { {}}{...}}`
++ `paren`: matches anything within curly cancelling parentheses. ex. `( s... )` `(()(...))`
++ `brack`: matches anything within curly cancelling square brackets. ex. `[...]` `[[],[...]]`
++ `group`: matches either curly, paren, or brack.
 
 you can use these helpers to help build up dynamic style patterns.
 
@@ -61,6 +65,21 @@ In fact, lets use that example to construct a new hello world, where the only in
     hello james // compiles to hello james
     var james = true;
     hello james //compiles to hello("james")
+
+#### `patterns name { patterns... }`
+Sometimes you wish to make a pattern class that is defined by several definitions. In this case, use the above syntax. please take note of the use of the keyword `patterns` and not `pattern` this time.
+
+    patterns greetings {
+        (hello $name:lit ) => { hello($name) }
+        (welcome $name:lit ) => { hello($name) }
+        (goodbye $name:lit ) => { bye($name, true) }
+    }
+    pattern (say $greet:greetings) => { say($greet) }
+    say hello mary; //say(hello(mary));
+    say welcome josh;
+    goodbye mabelle;//bye(mabelle, true)
+
+This makes it easy to make very dynamic languages with very little syntax.
 
 #### SPECIAL MENTION: `...` The ellipses
 Some patterns may require you match things in repeated succession. For these patterns use the ellipses. It denotes that you would like the pattern or token before it, to be repeated one or many times. It uses the syntax `$variable:type (delimiter)...`.
@@ -108,6 +127,11 @@ Sometimes you may want to separate your patterns from your working documents. If
 if you would like your output to be in a single file, use the `-c` flag to join them together.
 
     $   smpl c ./example/*.example -c example.js -o ./build
+
+##### --watch || -w
+If you would like to watch a file or directory, place the `-w` flag in the query.
+
+        $   smpl c ./example/*.example -o ./build -w
 
 #### smpl --help
 Use the help flag after any argument to get an overview of all of the arguments you can use.
