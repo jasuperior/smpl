@@ -6,6 +6,7 @@ var duration = require("gulp-duration");
 var watch = require("gulp-watch")
 var fn = require("gulp-fn");
 var compiler = require("../lib/dsl.js");
+var logger = require("gulp-log-capture")
 var fs = require("fs");
 /*var start = new Date();*/
 process.on('SIGINT', function (){ process.exit(2) });
@@ -17,6 +18,7 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
     .option("-c, --concat", "concatenate files into single filename provided")
     .option("-e --extension <ex>","change the file extension to the one provided")
     .option("-w --watch", "watches the files at the given input directory")
+    .option ("-d --debug", "exposes internal console.log calls")
     .action(function(a,cb){
         var d = duration("Compile Finished in");
         var loadModules = duration("Added Modules: ");
@@ -33,6 +35,9 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
         }else {
             var converted = gulp.src(dir)
         }
+        if(a.options.debug){
+            converted = converted.pipe(logger.start(console, 'log'))
+        }
         if(a.options.watch) {
             converted = converted.pipe(watch(a.dir))
         }
@@ -41,10 +46,15 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
             var content = compiler.compile(str); ++num;
             file.contents = new Buffer(content);
             file.path = file.path.replace(/\.\w+$/, a.options.extension||".js");
+            compiler.clear();
             return file;
         }));
+
         if(a.options.concat){ converted = converted.pipe(concat(a.options.concat)) }
-        converted.pipe(d).pipe(gulp.dest(output));
+        if(a.options.debug){
+            converted = converted.pipe(logger.stop("smpl"))
+        }else
+            converted.pipe(d).pipe(gulp.dest(output));
         /*var end = new Date();
         this.log("Finished compiling "+num+" files in :: ", end-start, "ms");*/
         v.ui.cancel();

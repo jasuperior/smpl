@@ -3,4 +3,7 @@ hello([
 	world,
 	moon,
 	sun
-]);  //compiles to hello([ world, moon, sun ]);
+])  //compiles to hello([ world, moon, sun ]);
+hello([
+	world
+])  //should compiler to hello([world])
