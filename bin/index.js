@@ -41,6 +41,7 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
         if(a.options.watch) {
             converted = converted.pipe(watch(a.dir))
         }
+        
         converted.pipe(fn(function( file ){
             var str = file.contents.toString('utf8');
             var content = compiler.compile(str); ++num;
