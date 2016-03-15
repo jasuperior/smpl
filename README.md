@@ -174,3 +174,15 @@ This will allow you to call commands without the need for the long query strings
 This is still in Pre-Alpha stage. I literally built this in a couple days, so i wouldn't recommend using it in production just yet. I haven't even written any tests for it yet. So, use at your own risk.
 
 That being said, contribute to your hearts desire, I am always open to new ideas and ways in which we can improve this library.  Drop any issues, updates, ideas, etc. in the issues of the git repo and I'll try my best to address it in a timely fashion.
+
+## Roadmap for v0.1.0
+> Add Support for SourceMaps
+> Allow for "Group" captures in patterns
+> Allow For "Grouped" captures in output expressions
+> Allow for "Grouped" Ellipses in patterns
+> Allow for "Grouped" Ellipses in output expression
+> ~~Add Support for Packaged Commands~~
+> Make more in depth examples for different specific domains
+>  Command Line argument for outputting to terminal
+> Documentation for required version of package
+> Condense core file size
