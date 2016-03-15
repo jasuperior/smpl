@@ -4,6 +4,8 @@
 
 ![smpl Logo](./smpl.logo.png)
 
+[![NPM](https://nodei.co/npm/smpl.js.png)](https://nodei.co/npm/smpl.js/)
+
 smpl (pronounced "simple") is a compiler which allows you to write your code the way you want. You define simple idioms that make sense to you, and use them to construct your code, then compile it down to your language of choice.
 
 It's not just a simple compiler, because smpl makes no judgements of which language you will be targeting for your compile.  Compile it to C, Ruby, PHP, whatever, its up to you.
@@ -146,7 +148,20 @@ Use the help flag after any argument to get an overview of all of the arguments 
     exit                     Exits application.
     compile [options] <dir>  Parses the files at the given directory (node glob)
 
+## Package Commands
+You can optionally add commands to your package.json file. smpl will read your package for the `"smpl"` object, and parse any expressions that you make a key for.
 
+    "name":"my_package",
+    ...
+    "smpl": {
+            "examples": "c ./examples/**/*.smpl"
+    }
+
+This will allow you to call commands without the need for the long query strings
+
+    $   smpl examples
+    //same as
+    $   smpl c ./examples/**/*.smpl
 
 ## Be Aware
 This is still in Pre-Alpha stage. I literally built this in a couple days, so i wouldn't recommend using it in production just yet. I haven't even written any tests for it yet. So, use at your own risk.

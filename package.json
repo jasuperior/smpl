@@ -31,5 +31,8 @@
   "bugs": {
     "url": "https://github.com/jasuperior/smpl/issues"
   },
-  "homepage": "https://github.com/jasuperior/smpl"
+  "homepage": "https://github.com/jasuperior/smpl",
+  "smpl": {
+      "examples": "c ./examples/**/*.smpl"
+  }
 }
