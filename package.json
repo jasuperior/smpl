@@ -1,6 +1,6 @@
 {
   "name": "smpl.js",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "",
   "main": "lib/dsl.js",
   "scripts": {
@@ -33,6 +33,6 @@
   },
   "homepage": "https://github.com/jasuperior/smpl",
   "smpl": {
-      "examples": "c ./examples/**/*.smpl"
+    "examples": "c ./examples/**/*.smpl"
   }
 }
