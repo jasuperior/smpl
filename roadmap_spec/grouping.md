@@ -19,6 +19,7 @@
     + if `length > 0`
         + match all `pattern_group` in `expression`
         + strip results of `$ + ()`
+        + replace appearance of original capture in expression with stripped version
         + apply expressions toregex's at  indexes in `.pattern_groups`.
 
 *It should work after this implementation*
