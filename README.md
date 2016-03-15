@@ -156,6 +156,11 @@ If you would like to watch a file or directory, place the `-w` flag in the query
 
         $   smpl c ./example/*.example -o ./build -w
 
+##### --debug || -d
+`-d` outputs log messages to help you figure out where something may be going wrong.
+
+        $   smpl c ./example/*.example -o ./build -w
+
 #### smpl --help
 Use the help flag after any argument to get an overview of all of the arguments you can use.
 
