@@ -19,7 +19,9 @@ I've tried on several occasions to build my own mini-language using the compiler
 
 smpl aims to solve that by allowing for more general grammar definitions, as well as taking out the dependency for javascript syntax. I recommend people try some of these other solutions if smpl is not a good fit for your project.
 
-## Get Started
+Although our goals are very different from [sweet.js](http://www.sweetjs.org), I thought their approach to syntax makes it easier to construct these patterns-- thus, I have borrowed quite a few syntax choices from that library. Again, I definitely recommend you take a look to get an idea of what you'll be able to do here.
+
+## Getting Started
 Simply install the package globally to get the command line tool
 
     npm install smpl.js -g
