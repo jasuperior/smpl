@@ -15,9 +15,9 @@ It's not just a simple compiler, because smpl makes no judgements of which langu
 ## Motivations
 I've tried on several occasions to build my own mini-language using the compilers available on the market. I've used libraries such as [sweet.js](http://www.sweetjs.org) and [peg.js](http://www.pegjs.org) which were great, but fell short of what I was looking for. Mainly, they both suffered from the same set of concerns:
 + They are too opinionated about the target language, both forcing you into a javascript syntax to parse your results.
-+ Things become increasingly exponentially complex the larger your language set gets.
++ Things get exponentially complex the larger your language set becomes.
 
-smpl aims to solve that by allowing for more general grammar definitions, as well as taking about the dependency for javascript syntax. I recommend people try some of these other solutions if smpl is not a good fit for your project.
+smpl aims to solve that by allowing for more general grammar definitions, as well as taking out the dependency for javascript syntax. I recommend people try some of these other solutions if smpl is not a good fit for your project.
 
 ## Get Started
 Simply install the package globally to get the command line tool
