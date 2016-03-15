@@ -6,6 +6,7 @@
     //compiles to do_something("joe","james","marry")
 
 > Implementation
+
 + make  expression  persisted in Array.toRegExp()
 + make `pattern_group `a `_type` class
 + test for `pattern_group` in `makePattern`
