@@ -184,5 +184,5 @@ That being said, contribute to your hearts desire, I am always open to new ideas
 + ~~Add Support for Packaged Commands~~
 + Make more in depth examples for different specific domains
 +  Command Line argument for outputting to terminal
-+ Documentation for required version of package
++ Documentation for `required` version of package
 + Condense core file size
