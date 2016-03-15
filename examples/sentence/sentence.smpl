@@ -6,4 +6,4 @@ patterns greetings {
 pattern (say $greet:greetings ) => { say($greet) }
 say hello mary;
 say welcome josh;
-goodbye mabelle;
+goodbye mabelle; goodbye jamel;
