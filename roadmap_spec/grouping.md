@@ -1,4 +1,7 @@
 # Grouping Syntax for Patterns and expressions
+
+** Derpricated in lieu of a new implementation. References this a bit. Must Edit to reflect changes **
+
 > Proposed Syntax
 
     pattern ( $( hello $group:lit )(,)... ; ) => { do_something($("$group ")(,)... ) }

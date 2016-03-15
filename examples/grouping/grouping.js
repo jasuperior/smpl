@@ -1,0 +1,1 @@
+grouped((name + 10), (age + 20), (skills + 30));

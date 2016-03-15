@@ -21,7 +21,7 @@ smpl aims to solve that by allowing for more general grammar definitions, as wel
 
 Although our goals are very different from [sweet.js](http://www.sweetjs.org), I thought their approach to syntax makes it easier to construct these patterns-- thus, I have borrowed quite a few syntax choices from that library. Again, I definitely recommend you take a look to get an idea of what you'll be able to do here.
 
-**This is not a fork**,  just thoroughly inspired. 
+**This is not a fork**,  just thoroughly inspired.
 
 ## Getting Started
 Simply install the package globally to get the command line tool
@@ -94,7 +94,8 @@ Sometimes you wish to make a pattern class that is defined by several definition
 
 This makes it easy to make very dynamic languages with very little syntax.
 
-#### SPECIAL MENTION: `...` The ellipses
+#### SPECIAL MENTIONS:
+##### `...` The Ellipses
 Some patterns may require you match things in repeated succession. For these patterns use the ellipses. It denotes that you would like the pattern or token before it, to be repeated one or many times. It uses the syntax `$variable:type (delimiter)...`.
 
     pattern { hello $name:lit( ,)... } => { hello([$name])}
@@ -105,6 +106,15 @@ you can also change the delimiter in the output if you'd like, by using the `().
     pattern { hello $name:lit( )... } => { hello([$name(,)...])} //notice that whitespace as a delim is marked by an empty paren
 
     hello world moon sun; //compiles to hello([ world, moon, sun ]);
+
+##### `$( ... )` Capture Groups
+If you need to capture a portion of your pattern together, as a group, to then parse as a group; use the capture groups syntax.  This allows you to place a portion of your pattern in the `$+()` syntax to then go about either repeating that group, or doing as you'd please.
+
+    pattern ( why $( no $name:lit $age:num )(,)... ) => {
+    grouped( $( ($name + $age) )(,)... )
+    }
+    why no name 10, no age 20, no skills 30; // compiles to grouped((name + 10), (age + 20), (skills + 30));
+
 
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
@@ -181,10 +191,10 @@ That being said, contribute to your hearts desire, I am always open to new ideas
 
 ## Roadmap for v0.1.0
 + Add Support for SourceMaps
-+ Allow for "Group" captures in patterns
-+ Allow For "Grouped" captures in output expressions
-+ Allow for "Grouped" Ellipses in patterns
-+ Allow for "Grouped" Ellipses in output expression
++ ~~Allow for "Group" captures in patterns~~
++ ~~Allow For "Grouped" captures in output expressions~~
++ ~~Allow for "Grouped" Ellipses in patterns~~
++ ~~Allow for "Grouped" Ellipses in output expression~~
 + ~~Add Support for Packaged Commands~~
 + Make more in depth examples for different specific domains
 +  Command Line argument for outputting to terminal
