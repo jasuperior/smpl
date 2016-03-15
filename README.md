@@ -21,6 +21,8 @@ smpl aims to solve that by allowing for more general grammar definitions, as wel
 
 Although our goals are very different from [sweet.js](http://www.sweetjs.org), I thought their approach to syntax makes it easier to construct these patterns-- thus, I have borrowed quite a few syntax choices from that library. Again, I definitely recommend you take a look to get an idea of what you'll be able to do here.
 
+*This is not a fork*,  just thoroughly inspired. 
+
 ## Getting Started
 Simply install the package globally to get the command line tool
 
