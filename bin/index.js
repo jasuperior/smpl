@@ -62,7 +62,7 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
     if(pkg.smpl){
         keys = Object.keys(pkg.smpl);
         keys.forEach(function(key){
-            v.command(key).action(function(a,cb){
+            v.command(key, pkg.smpl[key]).action(function(a,cb){
                 // console.log(`Parsing cmd  (${key}) :: `,  pkg.smpl[key]);
                 v.execSync(pkg.smpl[key]);
             })
