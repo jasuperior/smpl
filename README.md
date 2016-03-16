@@ -201,6 +201,7 @@ That being said, contribute to your hearts desire, I am always open to new ideas
 + ~~Allow for "Grouped" Ellipses in patterns~~
 + ~~Allow for "Grouped" Ellipses in output expression~~
 + ~~Add Support for Packaged Commands~~
++ create "Backtrack" Pattern (recursive)
 + Make more in depth examples for different specific domains
 +  Command Line argument for outputting to terminal
 + Documentation for `required` version of package

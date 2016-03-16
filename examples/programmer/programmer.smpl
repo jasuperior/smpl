@@ -3,11 +3,13 @@ pattern ( A $name:lit has a $( $param:lit )(,)... ) => {
         $( this.$param = $param )(;)... ;
     }
 }
-A programmer has a name, age, skills;
+pattern (log $ex:expr ) => { console.log($ex)}
+
+A Programmer has a name, age, skills;
 programmers are :
     ["joe", 10, "javascript"],
     ["james", 20, "javascript,java"],
     ["jamie", 25, "haskell,prolog"],
     ["jonathan",16,"c,c#,basic"],
     ["django",21]
-for every programmers, log name if skillset exists;
+for every Programmer in programmers, log name if skillset exists;
