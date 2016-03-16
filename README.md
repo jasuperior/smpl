@@ -115,6 +115,25 @@ If you need to capture a portion of your pattern together, as a group, to then p
     }
     why no name 10, no age 20, no skills 30; // compiles to grouped((name + 10), (age + 20), (skills + 30));
 
+##### `!` Backtrack Patterns
+
+    !pattern  name ( input..... ) => { output ..... }
+    !pattern   ( input..... ) => { output ..... }
+    !patterns  { pattern_decl... }
+
+Backtrack is denoted with a `!` before your pattern definition. It means that your pattern, after it has been matched and transformed, does not progress the cursor.
+
+The purpose of this is to allow you to match a second pattern against the output of your backtracked pattern. Because the cursor does not progress, the next compile cycle will begin before the first character of your output.
+
+    !pattern ( hello ) => { itsMe() }
+    pattern ( itsMe() ) => { iWasWondering().ifIcould(you, withMe) }
+
+    hello === itsMe(); //eat your heart out adele! :-D
+    //outputs iWasWondering().ifIcould(you, withMe) === iWasWondering().ifIcould(you, withMe);
+
+#### CAUTION
+Because this inherently prohibits the cursors progression, be careful that you do not find yourself in an infinite loop of outputs which match other patterns that also backtrack. **This will overflow the call stack.**
+
 
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
@@ -201,7 +220,7 @@ That being said, contribute to your hearts desire, I am always open to new ideas
 + ~~Allow for "Grouped" Ellipses in patterns~~
 + ~~Allow for "Grouped" Ellipses in output expression~~
 + ~~Add Support for Packaged Commands~~
-+ create "Backtrack" Pattern (recursive)
++ ~~create "Backtrack" Pattern (recursive)~~
 + Make more in depth examples for different specific domains
 +  Command Line argument for outputting to terminal
 + Documentation for `required` version of package

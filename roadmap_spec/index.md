@@ -9,3 +9,5 @@
 +  Command Line argument for outputting to terminal
 + Documentation for `required` version of package
 + Condense core file size
+
+node bin/index c ./examples/**/*.smpl -d
