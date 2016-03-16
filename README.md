@@ -131,8 +131,8 @@ The purpose of this is to allow you to match a second pattern against the output
     hello === itsMe(); //eat your heart out adele! :-D
     //outputs iWasWondering().ifIcould(you, withMe) === iWasWondering().ifIcould(you, withMe);
 
-#### CAUTION
-Because this inherently prohibits the cursors progression, be careful that you do not find yourself in an infinite loop of outputs which match other patterns that also backtrack. **This will overflow the call stack.**
+> #### CAUTION
+> Because this inherently prohibits the cursors progression, be careful that you do not find yourself in an infinite loop of outputs which match other patterns that also backtrack. **This will overflow the call stack.**
 
 
 ## Command Line Tool
