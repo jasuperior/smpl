@@ -6,6 +6,9 @@
 
 [![NPM](https://nodei.co/npm/smpl.js.png)](https://nodei.co/npm/smpl.js/)
 
+* [Subscribe to our User's Mailing List](https://groups.google.com/forum/#!forum/jasuperior)
+* [Subscribe to our Dev Forum](https://groups.google.com/forum/#!forum/smpl-devs)
+
 smpl (pronounced "simple") is a compiler which allows you to write your code the way you want. You define simple idioms that make sense to you, and use them to construct your code, then compile it down to your language of choice.
 
 It's not just a simple compiler, because smpl makes no judgements of which language you will be targeting for your compile.  Compile it to C, Ruby, PHP, whatever, its up to you.
