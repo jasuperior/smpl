@@ -1,15 +1,17 @@
-pattern ( A $name:lit has a $( $param:lit )(,)... ) => {
+!pattern ( A $name:lit has a $( $param:lit )(,)... ) => {
     function $name ( $( $param )(,)... ){
         $( this.$param = $param )(;)... ;
     }
 }
-pattern (log $ex:expr ) => { console.log($ex)}
-
+capture Class ( function $name:lit ) => { $name }
+pattern (  $( $inputs:lit )(,)... are $clss:Class ) => {
+    $( $clss( $inputs ) )(;)...
+}
+pattern (  $clss:Class are $( $inputs:lit $num:num )(,)... ) => {
+    $( $clss( $inputs ) )(;)...
+}
 A Programmer has a name, age, skills;
-programmers are :
-    ["joe", 10, "javascript"],
-    ["james", 20, "javascript,java"],
-    ["jamie", 25, "haskell,prolog"],
-    ["jonathan",16,"c,c#,basic"],
-    ["django",21]
+
+Programmer are jamel 10, tony 12, steven 540;
+
 for every Programmer in programmers, log name if skillset exists;

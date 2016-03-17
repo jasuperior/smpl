@@ -1,1 +1,1 @@
-grouped((name + 10), (age + 20), (skills + 30));
+grouped((no + 10), (no + 20), (no + 30));

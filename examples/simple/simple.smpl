@@ -1,4 +1,4 @@
-pattern ( hello world ) => { console.log("hello world") }
+pattern ( hello $world:lit ) => { console.log("hello $worlds") }
 hello world;
 hello world;
 hello world;
