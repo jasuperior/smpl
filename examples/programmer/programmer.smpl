@@ -2,16 +2,28 @@
     function $name ( $( $param )(,)... ){
         $( this.$param = $param )(;)... ;
     }
+    var create$name  = (function () {
+        function create (args) {
+            return $name.apply(this, args)
+        }
+        create.prototype = $name.prototype;
+        return function () { return new create(arguments) }
+    })()
 }
 capture Class ( function $name:lit ) => { $name }
-pattern (  $( $inputs:lit )(,)... are $clss:Class ) => {
-    $( $clss( $inputs ) )(;)...
+pattern ( $name:lit are a list of $clss:Class : $( $inputs:brack )(,)... ) => {
+    var $name = [$( create$clss.apply(null, $inputs ) )(,)...]
 }
-pattern (  $clss:Class are $( $inputs:lit $num:num )(,)... ) => {
-    $( $clss( $inputs ) )(;)...
+!pattern (for every $clss:Class in $name:lit , $action:lit( )... ) => {
+    $name.forEach(($clss)=> {
+        $action
+    });
+}
+pattern ( $action:lit(.)... $input:lit||""$input) }
 }
 A Programmer has a name, age, skills;
+programers are a list of Programmer :
+    ["jamel", 10, "nothing"],
+    ["james", 20, "noway"];
 
-Programmer are jamel 10, tony 12, steven 540;
-
-for every Programmer in programmers, log name if skillset exists;
+for every Programmer in programmers , console.log name if skillset exists;
