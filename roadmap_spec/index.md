@@ -11,3 +11,5 @@
 + Condense core file size
 
 node bin/index c ./examples/**/*.smpl -d
+ var r = require("./lib/parserv0.1.0");
+ r.tokenize("hello $($think:girl in the place)(,)...");
