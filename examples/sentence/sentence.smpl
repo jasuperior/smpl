@@ -1,9 +1,0 @@
-patterns greetings {
-    (hello $name:lit ) => { hello($name) }
-    (welcome $name:lit ) => { hello($name) }
-    (goodbye $name:lit ) => { bye($name, true) }
-}
-pattern (say $greet:greetings ) => { say($greet) }
-say hello mary;
-say welcome josh;
-goodbye mabelle; goodbye jamel;

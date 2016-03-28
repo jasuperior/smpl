@@ -1,4 +1,0 @@
-!pattern ( hello ) => { itsMe() }
-pattern ( itsMe() ) => { iWasWondering().ifIcould(you, withMe) }
-
-hello === itsMe(); //eat your heart out adele! :-D

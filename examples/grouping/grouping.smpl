@@ -1,4 +1,0 @@
-pattern ( why $( no $name:lit $age:num )(,)... ) => {
-grouped( $( ($name + $age) )(,)... ) 
-}
-why no name 10, no age 20, no skills 30;
