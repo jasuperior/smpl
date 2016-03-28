@@ -1,29 +1,29 @@
-!pattern ( A $name:lit has a $( $param:lit )(,)... ) => {
-    function $name ( $( $param )(,)... ){
-        $( this.$param = $param )(;)... ;
-    }
-    var create$name  = (function () {
-        function create (args) {
-            return $name.apply(this, args)
-        }
-        create.prototype = $name.prototype;
-        return function () { return new create(arguments) }
-    })()
+class prop [ { $name:lit : $type:lit } , { $name:lit } ]
+capture decl { A $name:lit has a $props:prop(,)... }=>{
+    var props = this.props;
+    // console.log("after the match of the decl::::::::::::::::::::::::");
+    if(!props) return null;
+    var result =  `function ${this.name} ( ${this.props.map((v)=>{ return v.name })}){
+        ${this.props.map((v) => "this."+v.name +" = "+(v.type?("typeof "+v.name+" == '"+v.type.trim()+"' && "):"")+v.name  ).join(";n")};
+     }`
+     this.addCapture(this.name+"s")
+     this.addCapture(this.name+"")
+    return result;
 }
-capture Class ( function $name:lit ) => { $name }
-pattern ( $name:lit are a list of $clss:Class : $( $inputs:brack )(,)... ) => {
-    var $name = [$( create$clss.apply(null, $inputs ) )(,)...]
+capture list { $name:lit is a list of $type:$decl : $( [$inputs...] )(,)... } => {
+    var inputs = this.groups[0].inputs, self = this;
+    this.C(this.name.slice(0,this.name.length-1));
+    return "var "+this.name+" = ["+inputs.map(function(v){ return "new "+self.type._value.slice(0,self.type._value.length-1)+"("+v+")"})+"]"
 }
-!pattern (for every $clss:Class in $name:lit , $action:lit( )... ) => {
-    $name.forEach(($clss)=> {
-        $action
-    });
+class pronoun [{his},{their},{her},{its},{this},{}]
+pattern { For every $name:$list $action... . } => {
+    return this.name+"s.forEach(function("+this.name+"){ with("+this.name+"){"+this.c.compile(this.action)+"}});";
 }
-pattern ( $action:lit(.)... $input:lit||""$input) }
+pattern { log $pronoun:pronoun $something:lit } => {
+    return "console.log("+this.something+")"
 }
-A Programmer has a name, age, skills;
-programers are a list of Programmer :
-    ["jamel", 10, "nothing"],
-    ["james", 20, "noway"];
+pattern {.}=>{return ";"}
 
-for every Programmer in programmers , console.log name if skillset exists;
+A Programmer has a name:string, age:number, skills.
+programmers is a list of Programmers : ["jamel", 10, "nothing"], ["james", 20, "noway"].
+For every programmer log their name.

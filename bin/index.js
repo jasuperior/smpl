@@ -29,7 +29,8 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
         if(modules && !Array.isArray(modules)) modules = [modules];
         if(modules) modules.forEach(function(value){
                 var file = fs.readFileSync(value, "utf8");
-                compiler.compile(file, true);
+                compiler.compile(file);
+                compiler.important();
         }.bind(this))
         if(modules){
             var converted = gulp.src(dir)
@@ -45,11 +46,12 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
         converted.pipe(fn(function( file ){
             var str = file.contents.toString('utf8');
             var content = compiler.compile(str); ++num;
+
             file.contents = new Buffer(content);
             file.path = file.path.replace(/\.\w+$/, a.options.extension||".js");
             if(a.options.debug)
             console.log("Compile Finished:: ", file.path);
-            compiler.clear();
+            compiler.reset();
             return file;
         }));
 

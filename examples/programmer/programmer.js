@@ -1,36 +1,15 @@
 function Programmer(name, age, skills) {
-	this.name = name;
-	this.age = age;
-	this.skills = skills;
-}
-
-var createProgrammer = (function () {
-		function create(args) {
-			return Programmer.apply(this, args)
-		}
-
-		create.prototype = Programmer.prototype;
-
-		return function () {
-			return new create(arguments)
-		}
-	})();
-
-var programers = [
-		createProgrammer.apply(null, [
-			"jamel",
-			10,
-			"nothing"
-		]),
-		createProgrammer.apply(null, [
-			"james",
-			20,
-			"noway"
-		])
+	this.name = typeof name == "string" && name;
+	nthis.age = typeof age == "number" && age;
+	nthis.skills = skills;
+};
+var programmers = [
+		new Programmer("jamel", 10, "nothing"),
+		new Programmer("james", 20, "noway")
 	];
 
-programmers.forEach((Programmer) = > {
-	console
-});.if(skillset, exists) {
-	return log(name)
-};
+programmers.forEach(function (programmer) {
+	with (programmer) {
+		console.log(name)
+	}
+});
