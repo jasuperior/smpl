@@ -1,5 +1,5 @@
-class prop [ { $name:lit : $type:lit } , { $name:lit } ]
-capture decl { A $name:lit has a $props:prop(,)... }=>{
+class arg [{ $name:lit : $type:lit } , { $name:lit }]
+capture decl { A $name:lit has a $props:arg(,)... }=>{
     var props = this.props;
     // console.log("after the match of the decl::::::::::::::::::::::::");
     if(!props) return null;

@@ -45,7 +45,13 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
 
         converted.pipe(fn(function( file ){
             var str = file.contents.toString('utf8');
-            var content = compiler.compile(str); ++num;
+            try{
+            var content = compiler.compile(" "+str); ++num;
+            }catch(e){
+                var content = ""; ++num;
+                console.log(`File [${file.path}] failed to parse :`)
+                throw e;
+            }
 
             file.contents = new Buffer(content);
             file.path = file.path.replace(/\.\w+$/, a.options.extension||".js");

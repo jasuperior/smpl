@@ -1,21 +1,54 @@
 # smpl
-### simplified modelling programming language
-> simplifies your programming, by allowing you to code how you want. SMPL!
+### The easiest and most powerful little compiler, for the transpiling age.
+> simplify your code, increase readability, become more productive. This is the first compiler built for the purpose of transpiling first.
 
 ![smpl Logo](./smpl.logo.png)
 
 [![NPM](https://nodei.co/npm/smpl.js.png)](https://nodei.co/npm/smpl.js/)
 
-* [Subscribe to our User's Mailing List](https://groups.google.com/forum/#!forum/jasuperior)
-* [Subscribe to our Dev Forum](https://groups.google.com/forum/#!forum/smpl-devs)
+ [Subscribe to our User's Mailing List](https://groups.google.com/forum/#!forum/jasuperior) |  [Subscribe to our Dev Forum](https://groups.google.com/forum/#!forum/smpl-devs)
 
-smpl (pronounced "simple") is a compiler which allows you to write your code the way you want. You define simple idioms that make sense to you, and use them to construct your code, then compile it down to your language of choice.
+ smpl (pronounced "simple") is a compiler which allows you to write your code the way you want. You define simple idioms that make sense to you, and use them to construct your code, then compile it down to your language of choice.
 
-It's not just a simple compiler, because smpl makes no judgements of which language you will be targeting for your compile.  Compile it to C, Ruby, PHP, whatever, its up to you.
+ It's not just a simple compiler, because smpl makes no judgements of which language you will be targeting for your compile.  Compile it to C, Ruby, PHP, whatever, its up to you.
 
-> smpl as that!
+**This is the first stable realease. Please keep in mind that alot has changed since previous versions.**
+
+**TODO**
+need to make fork of named-js-regexp that accounts for c1 change on line 38.
+<script src="https://gist.github.com/natefaubion/f4be4c8531ef45de87b4.js"></script>
+
+#### Table of Contents
+* Getting Started
+* Motivations
+* Goals
+* API
+    * Syntax
+        * Pattern Syntax
+            * Pattern Variables
+            * Variable Classes
+            * Whitespace
+        * Pattern
+        * Class
+        * Capture
+        * Pattern Expression
+        * Compile Time Actions    
+    * CLI
+    * Standard Lib
+        * Compiler
+* Roadmap
+* Contributing
+
+## Getting Started
+Simply install the package globally to get the command line tool
+
+    npm install smpl.js -g
+    smpl --help
 
 ## Motivations
+
+
+
 I've tried on several occasions to build my own mini-language using the compilers available on the market. I've used libraries such as [sweet.js](http://www.sweetjs.org) and [peg.js](http://www.pegjs.org) which were great, but fell short of what I was looking for. Mainly, they both suffered from the same set of concerns:
 + They are too opinionated about the target language, both forcing you into a javascript syntax to parse your results.
 + Things get exponentially complex the larger your language set becomes.
@@ -25,12 +58,6 @@ smpl aims to solve that by allowing for more general grammar definitions, as wel
 Although our goals are very different from [sweet.js](http://www.sweetjs.org), I thought their approach to syntax makes it easier to construct these patterns-- thus, I have borrowed quite a few syntax choices from that library. Again, I definitely recommend you take a look to get an idea of what you'll be able to do here.
 
 **This is not a fork**,  just thoroughly inspired.
-
-## Getting Started
-Simply install the package globally to get the command line tool
-
-    npm install smpl.js -g
-    smpl --help
 
 ## Syntax
 smpl has a very small set of helper macros which you can use to construct your patterns.
