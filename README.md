@@ -73,6 +73,7 @@ SMPL doesn't try to be a full on compiler. There are some things that they may, 
 + A Package Ecosystem
 + An Open Community
 + **Fun**
+
 Go to our Goals Page in the wiki to learn more about each of these.
 ## Syntax
 ---
