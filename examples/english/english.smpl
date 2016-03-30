@@ -1,0 +1,11 @@
+({var quantifiers = {} })
+capture quantifier {quant $name:lit = $value:num}=>{
+    quantifiers[this.name] = parseInt(this.value);
+    this.addCapture(this.name);
+    return "";
+}
+class article [{the},{some},{a $number:$quantifier},{an $number:$quantifier},{a},{an}];
+pattern noun {$article:article $word:lit} => {
+}
+quant couple = 2;
+a couple guys;

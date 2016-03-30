@@ -1,4 +1,4 @@
-# smpl
+# SMPL v0.1.0a
 ### The easiest and most powerful little compiler, for the transpiling age.
 > simplify your code, increase readability, become more productive. This is the first compiler built for the purpose of transpiling first.
 
@@ -8,34 +8,37 @@
 
  [Subscribe to our User's Mailing List](https://groups.google.com/forum/#!forum/jasuperior) |  [Subscribe to our Dev Forum](https://groups.google.com/forum/#!forum/smpl-devs)
 
- smpl (pronounced "simple") is a compiler which allows you to write your code the way you want. You define simple idioms that make sense to you, and use them to construct your code, then compile it down to your language of choice.
+ SMPL (pronounced "simple") is the compiler for the transpiling age. Using an easy to learn syntax, compile-time scope, and a command line interface, it allows you to build a dynamic and modular transpiler in minutes.
 
- It's not just a simple compiler, because smpl makes no judgements of which language you will be targeting for your compile.  Compile it to C, Ruby, PHP, whatever, its up to you.
+    pattern { hello world } => {
+        return `console.log("hello world"); `
+    }
+    hello world //compiles to console.log("hello world");
 
-**This is the first stable realease. Please keep in mind that alot has changed since previous versions.**
+SMPL is built around an entirely new paradigm which is inspired by the rise of transpiling. By giving you the ability to create compile-time patterns and code, you are able to turn that confusing source code, into beatiful, idiomatic glory.  
 
-**TODO**
-need to make fork of named-js-regexp that accounts for c1 change on line 38.
-<script src="https://gist.github.com/natefaubion/f4be4c8531ef45de87b4.js"></script>
+**This is the first stable release. Please keep in mind that a lot has changed since previous versions.**
 
 #### Table of Contents
-* Getting Started
-* Motivations
-* Goals
+* [Getting Started](#getting-started)
+* [Motivations](#motivations)
+* [Goals](#goals)
 * API
+    * The Compiler
     * Syntax
-        * Pattern Syntax
+        * Pattern Template
             * Pattern Variables
             * Variable Classes
             * Whitespace
-        * Pattern
-        * Class
-        * Capture
+        * Pattern Declaration
+        * Class Declaration
+        * Capture Declaration
         * Pattern Expression
-        * Compile Time Actions    
+        * Compile-Time Code    
     * CLI
     * Standard Lib
         * Compiler
+        * Source
 * Roadmap
 * Contributing
 
@@ -46,123 +49,36 @@ Simply install the package globally to get the command line tool
     smpl --help
 
 ## Motivations
+It's in my belief that programming should not be hard. Programming languages, though they praise themselves on their buzzwords like "speed" and "concurrency", generally, one's ability to utilize these features becomes harder the more complex you make your program. And most of this problem is due to the fact that the underlying data model of your program has the ability to grow and change, but your ability to express this complexity remains stagnant. So, because of these limitations, [Programming Language X] Consortium decides they must boost their spec to meet the demands of their developers. And thus the slow cycle of spec releases and builds begins.
 
+It's in my belief that we choose our programming languages based on the one that most closely fits the way we think and model things. It's obvious that the further away the semantics of your chosen language are from your natural thought patterns, the harder it will be to learn and apply.
 
+All that aside, it cant be the job of the programming language to make things exactly to our individual liking. There has to be a way to modularize your libraries to "speak" like you do.
 
-I've tried on several occasions to build my own mini-language using the compilers available on the market. I've used libraries such as [sweet.js](http://www.sweetjs.org) and [peg.js](http://www.pegjs.org) which were great, but fell short of what I was looking for. Mainly, they both suffered from the same set of concerns:
-+ They are too opinionated about the target language, both forcing you into a javascript syntax to parse your results.
-+ Things get exponentially complex the larger your language set becomes.
+This was the motivation behind me wanting to build SMPL. The goal wasnt to make yet another parser/lexer/compiler. The idea is to create modules for your syntax, and use them to refactor, transpile, lint, or even build an entirely new language, with ease.
 
-smpl aims to solve that by allowing for more general grammar definitions, as well as taking out the dependency for javascript syntax. I recommend people try some of these other solutions if smpl is not a good fit for your project.
+ I've used libraries such as [sweet.js](http://www.sweetjs.org) and [peg.js](http://www.pegjs.org) which were great, but fell short of what I was looking for. Mainly:
++ Parsers like peg.js, language.js, or jison require you to build an entirely new programming language from scratch, using a syntax which, in my opinion, is more complicated then regex.
++ Sweet.js has the right approach using macros, but its limited by forcing you to, well, use macros. All of your patterns are bound to a keyword, which makes more dynamic patterns harder to accomplish easily.
++ All of the current options make requiring npm modules to use in your compile a task that takes quite a bit of maneuvering.
++ There is no way in any of these options to store arbitrary information into a compile time scope for  use in other patterns and transformations.
 
-Although our goals are very different from [sweet.js](http://www.sweetjs.org), I thought their approach to syntax makes it easier to construct these patterns-- thus, I have borrowed quite a few syntax choices from that library. Again, I definitely recommend you take a look to get an idea of what you'll be able to do here.
+These reasons and more make SMPL a perfect, and most importantly, **easy** solution for you.
 
-**This is not a fork**,  just thoroughly inspired.
-
+## Goals
+SMPL doesn't try to be a full on compiler. There are some things that they may, quite frankly, do better.  However, SMPL's goals help outline our approach for the future of this project.
++ Easy Syntax
++ Small Footprint
++ Easy Interface
++ A Package Ecosystem
++ An Open Community
++ **Fun**
+Go to our Goals Page in the wiki to learn more about each of these.
 ## Syntax
-smpl has a very small set of helper macros which you can use to construct your patterns.
-##### `pattern ( input... ) => { output... }`
-Using the pattern macro,  you place the pattern you want to match in parenthesis, and place how you want it to transform in the brackets.
+---
+### The Compiler
 
-    pattern ( hello world ) => { console.log("hello world") }
-    hello world
-    //compiles to console.log("hello world")
-##### `pattern name (input) => { output }`
-Sometimes you want to use a pattern in another pattern. To do this you must name your pattern and use the expression variable `$name` denoted by a "$" symbol  followed by a colon `:` and the name of your pattern. you can then use that value caught by your variable in your output
-
-    pattern name ( world ) => { world } //naive demonstration. simply being used  to demonstrate the point
-    pattern ( hello $name:name  ) => { console.log("hello $name") }
-    hello world
-    //outputs console.log("hello world");
-
-there are a number of built in types which you can use out the gate.
-+ `lit`: matches a single literal identifier. ex. `hello` `world` `susan` `new` `var`
-+ `num`: matches a number. ex. `1` ` 2` `30` `540`
-+ `str`: matches a string. ex. `"hello world"` `'hello world'`
-+ `op`: matches an operator. ex `+` `-` `==` `=` `*`
-+ `punc`: matches a punctuator. ex `.` `;` `:` `,` `!`
-+ `comment`:  right now it only matches javascript style comments. (may extend it to `#` style comments in the future) ex. `\\comment` `\* comment *\`
-+ `func`: right now only supports javascript style function expressions and declarations. ex `function (){ ... }` `function name (){ }`
-+ `afunc`: javascript style arrow functions. ex `(x)=>x` `(x)=>{ return x }`
-+ `expr` : matches all of the above plus any patterns you define with a name.
-+ `curly`: matches anything within cancelling curly braces. ex. `{ s... }` `{ { {}}{...}}`
-+ `paren`: matches anything within cancelling parentheses. ex. `( s... )` `(()(...))`
-+ `brack`: matches anything within cancelling square brackets. ex. `[...]` `[[],[...]]`
-+ `group`: matches either curly, paren, or brack.
-
-you can use these helpers to help build up dynamic style patterns.
-
-    pattern hello ( hello $name:lit ) => { hello("$name") }
-    pattern greeting ( $hello:hello , welcome to my $place:lit ) => { welcome($hello, $place ) }
-    hello steven //compiles to hello("steven")
-    hello beth, welcome to my home //compiles to welcome(hello("beth"), home)
-as you can see, nested patterns compile to their own outputs once they are placed.
-#####` capture name ( input ) => { output }`
-Along with named patterns, you can also define places where you don't want to to necessarily transform the data, merely capture something about it. Thats where the capture macro comes along. Use the above syntax to capture data to be used in a pattern later. For instance, you may want to capture all of the variable names you declare in your document, and use them in specific patterns later.
-
-In fact, lets use that example to construct a new hello world, where the only input it will allow is the names of variables that i've declared.
-
-    capture var ( var $name:lit ) => { $name }
-    pattern ( hello $name:var ) => { hello("$name") }
-
-    hello james // compiles to hello james
-    var james = true;
-    hello james //compiles to hello("james")
-
-##### `patterns name { patterns... }`
-Sometimes you wish to make a pattern class that is defined by several definitions. In this case, use the above syntax. please take note of the use of the keyword `patterns` and not `pattern` this time.
-
-    patterns greetings {
-        (hello $name:lit ) => { hello($name) }
-        (welcome $name:lit ) => { hello($name) }
-        (goodbye $name:lit ) => { bye($name, true) }
-    }
-    pattern (say $greet:greetings) => { say($greet) }
-    say hello mary; //say(hello(mary));
-    say welcome josh;
-    goodbye mabelle;//bye(mabelle, true)
-
-This makes it easy to make very dynamic languages with very little syntax.
-
-#### SPECIAL MENTIONS:
-##### `...` The Ellipses
-Some patterns may require you match things in repeated succession. For these patterns use the ellipses. It denotes that you would like the pattern or token before it, to be repeated one or many times. It uses the syntax `$variable:type (delimiter)...`.
-
-    pattern { hello $name:lit( ,)... } => { hello([$name])}
-    hello world, moon, sun; //compiles to hello([ world, moon, sun ]);
-
-you can also change the delimiter in the output if you'd like, by using the `()...` syntax in the output.
-
-    pattern { hello $name:lit( )... } => { hello([$name(,)...])} //notice that whitespace as a delim is marked by an empty paren
-
-    hello world moon sun; //compiles to hello([ world, moon, sun ]);
-
-##### `$( ... )` Capture Groups
-If you need to capture a portion of your pattern together, as a group, to then parse as a group; use the capture groups syntax.  This allows you to place a portion of your pattern in the `$+()` syntax to then go about either repeating that group, or doing as you'd please.
-
-    pattern ( why $( no $name:lit $age:num )(,)... ) => {
-    grouped( $( ($name + $age) )(,)... )
-    }
-    why no name 10, no age 20, no skills 30; // compiles to grouped((name + 10), (age + 20), (skills + 30));
-
-##### `!` Backtrack Patterns
-
-    !pattern  name ( input..... ) => { output ..... }
-    !pattern   ( input..... ) => { output ..... }
-    !patterns  { pattern_decl... }
-
-Backtrack is denoted with a `!` before your pattern definition. It means that your pattern, after it has been matched and transformed, does not progress the cursor.
-
-The purpose of this is to allow you to match a second pattern against the output of your backtracked pattern. Because the cursor does not progress, the next compile cycle will begin before the first character of your output.
-
-    !pattern ( hello ) => { itsMe() }
-    pattern ( itsMe() ) => { iWasWondering().ifIcould(you, withMe) }
-
-    hello === itsMe(); //eat your heart out adele! :-D
-    //outputs iWasWondering().ifIcould(you, withMe) === iWasWondering().ifIcould(you, withMe);
-
-> #### CAUTION
-> Because this inherently prohibits the cursors progression, be careful that you do not find yourself in an infinite loop of outputs which match other patterns that also backtrack. **This will overflow the call stack.**
+### Pattern Template
 
 
 ## Command Line Tool

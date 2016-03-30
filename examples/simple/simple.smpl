@@ -1,0 +1,2 @@
+pattern {hello world}=> { return `console.log("hello orld")`}
+hello world;
