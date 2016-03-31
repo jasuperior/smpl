@@ -85,8 +85,11 @@ Go to our Goals Page in the wiki to learn more about each of these.
 SMPL, amongst other things, have made tremendous effort to simplify the process of compiling/transpiling. Thus we've given you a very simple syntax to construct your own grammars.
 ### The Compiler
 Knowing about the compiler isn't necessary, but it helps you understand whats going on when you are building your patterns. Each pattern is essentially a special tokenized version of regular expression. They can have a name, a priority, and a transform (more about each below) .
+
 Each round of the compile loop, checks each pattern to see if there is a match in the document. the match whose position is closest to the cursor will advance the cursor to its position, then will fire the appropriate transform context. The context is given a result object which contains the matched string, and properties mapping to those found in the [pattern temple](#pattern-template).
+
 Patterns must return a string or string-like object. Patterns which do not return a result (false, null, or undefined), will be excluded from all the following cycles, until a match is found for another pattern-- then the excluded pattern will be returned to the compile loop.
+
 Patterns which return a result, will replace its match in the input string, and progress the cursor to after the appearance of the replacement.
 ### Pattern Template
 Every pattern must contain a template, with which it can perform its matches. A Pattern template is surrounded by `{}` curly braces, and utilize [variables](#pattern-variables), [classes](#variable-classes), and repeats to express your desired logic.  Below is the most basic form of a valid pattern:
