@@ -19,6 +19,7 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
     .option("-c, --concat", "concatenate files into single filename provided")
     .option("-e --extension <ex>","change the file extension to the one provided")
     .option("-w --watch", "watches the files at the given input directory")
+    .option ("-r --run", "compile script then run it in terminal")
     .option ("-d --debug", "exposes internal console.log calls")
     .action(function(a,cb){
         var d = duration("Compile Finished in");
@@ -61,6 +62,17 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
         }));
 
         if(a.options.concat){ converted = converted.pipe(concat(a.options.concat)) }
+        if(a.options.run){
+            converted.pipe(fn(function(file){
+                var str = file.contents.toString("utf8");
+                var run = new Function("",str);
+                try{
+                    run();
+                }catch(e){
+                    console.log(e);
+                }
+            }))
+        }
         converted.pipe(d).pipe(gulp.dest(output));
         /*var end = new Date();
         this.log("Finished compiling "+num+" files in :: ", end-start, "ms");*/

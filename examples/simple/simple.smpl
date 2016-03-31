@@ -1,2 +1,2 @@
-pattern {hello world}=> { return `console.log("hello orld")`}
+pattern {hello world}=> { return `console.log("hello world")`}
 hello world;
