@@ -90,12 +90,13 @@ Patterns must return a string or string-like object. Patterns which do not retur
 Patterns which return a result, will replace its match in the input string, and progress the cursor to after the appearance of the replacement.
 ### Pattern Template
 Every pattern must contain a template, with which it can perform its matches. A Pattern template is surrounded by `{}` curly braces, and utilize [variables](#pattern-variables), [classes](#variable-classes), and repeats to express your desired logic.  Below is the most basic form of a valid pattern:
+
     {  hello world }
 
 It matches the appearance of the literals "hello" and "world".  
 You'll obviously want to do much more than match inputs literally. For more dynamic features, pattern variables are needed.
 #### Pattern Variables
-The *pattern variable* gives you the ability to store pieces of the match, into properties of the context of the [pattern's transform](#transform-context). 
+The *pattern variable* gives you the ability to store pieces of the match, into properties of the context of the [pattern's transform](#transform-context).
 
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
