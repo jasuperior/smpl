@@ -1,12 +1,14 @@
-({
-    var isNumber = function (input) {
+--- //code-block
+    //declare variables using the `ctx` keyword.
+    ctx isNumber = function (input) {
         return !isNaN(+input)
     }
-    var isString = function(input){
+    ctx isString = function(input){
         var str = /^((\"(\\.|[^"])*\")|(\'(\\.|[^'])*\'))$/;
         return !!str.exec(input.trim())
     }
-})
+---
+
 pattern funct { async function ($params...) {$body...} }=>{
     var body = this.c.compile(this.body);
     return `function (${this.params}) {
@@ -30,7 +32,7 @@ pattern { await $name:lit = $value... ; $rest... }=> {
         return `resolve(`+this.value+`)`;
     });
     p.temp = true;
-    if(isNumber(this.value)||isString(this.value)){
+    if(isNumber(this.value)||isString(this.value)){ //you can use variables declared in compile-time blocks
         this.value = `Promise.resolve(${this.value})`;
     }
     var res = `return `+this.value+`.then(function(${this.name}){
@@ -41,8 +43,8 @@ pattern { await $name:lit = $value... ; $rest... }=> {
 }
 
 async function go_get_data ( ) {
- await something = $.fetch("./somewhere.js");
- var a = something.replace("some words","nothing");
- await long_operation = do_operation(a);
- return long_operation;
+     await something = $.fetch("./somewhere.js");
+     var a = something.replace("some words","nothing");
+     await long_operation = do_operation(a);
+     return long_operation;
 }

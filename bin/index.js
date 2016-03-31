@@ -6,7 +6,6 @@ var duration = require("gulp-duration");
 var watch = require("gulp-watch")
 var fn = require("gulp-fn");
 var compiler = require("../lib/dsl.js");
-var logger = require("gulp-log-capture")
 var fs = require("fs");
 var pkg = require('../package.json');
 
@@ -46,7 +45,7 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
         converted.pipe(fn(function( file ){
             var str = file.contents.toString('utf8');
             try{
-            var content = compiler.compile(" "+str); ++num;
+            var content = compiler.compile(" "+str, a.options.debug); ++num;
             }catch(e){
                 var content = ""; ++num;
                 console.log(`File [${file.path}] failed to parse :`)
@@ -56,7 +55,7 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
             file.contents = new Buffer(content);
             file.path = file.path.replace(/\.\w+$/, a.options.extension||".js");
             if(a.options.debug)
-            console.log("Compile Finished:: ", file.path);
+            console.log("\nCompile Finished:: ", file.path);
             compiler.reset();
             return file;
         }));

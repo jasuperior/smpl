@@ -31,10 +31,14 @@ SMPL is built around an entirely new paradigm which is inspired by the rise of t
             * Variable Classes
             * Whitespace
         * Pattern Declaration
+            * Standard Declaration
+            * Named Declaration
+            * Priority
+            * Alternation
         * Class Declaration
         * Capture Declaration
         * Pattern Expression
-        * Compile-Time Code    
+        * Compile-Time Code Block
     * CLI
     * Standard Lib
         * Compiler
@@ -59,7 +63,7 @@ This was the motivation behind me wanting to build SMPL. The goal wasnt to make 
 
  I've used libraries such as [sweet.js](http://www.sweetjs.org) and [peg.js](http://www.pegjs.org) which were great, but fell short of what I was looking for. Mainly:
 + Parsers like peg.js, language.js, or jison require you to build an entirely new programming language from scratch, using a syntax which, in my opinion, is more complicated then regex.
-+ Sweet.js has the right approach using macros, but its limited by forcing you to, well, use macros. All of your patterns are bound to a keyword, which makes more dynamic patterns harder to accomplish easily.
++ Sweet.js has the right approach using macros, but its limited by forcing you to, well, use macros. All of your patterns are bound to a keyword, which makes more dynamic patterns harder to accomplish easily. Also, all that hygiene stuff makes my head spin.
 + All of the current options make requiring npm modules to use in your compile a task that takes quite a bit of maneuvering.
 + There is no way in any of these options to store arbitrary information into a compile time scope for  use in other patterns and transformations.
 
@@ -76,9 +80,9 @@ SMPL doesn't try to be a full on compiler. There are some things that they may, 
 
 Go to our Goals Page in the wiki to learn more about each of these.
 ## Syntax
----
 ### The Compiler
-
+Knowing about the compiler isn't necessary, but it helps you understand whats going on when you are building your patterns. Each pattern is essentially a special tokenized version of regular expression. They can have a name, a priority, and a transform (more about each below) .
+Each round of the compile loop, checks each pattern to see if there is a match in the document. the match whose position is closest and whose priority is highest to the cursor will advance the cursor to its position, then will fire your
 ### Pattern Template
 
 

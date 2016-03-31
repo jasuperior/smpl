@@ -1,0 +1,24 @@
+--- //code-block
+    prepend("var Color = require('color');");
+    unpend();
+---
+capture colors [{ color $name:lit = $value:str },{ color $name:lit = $value:flo }] => {
+    this.addCapture(this.name);
+    return ` var ${this.name} = new Color(${this.value})`;
+}
+class color_methods [{ $name:lit $value:str },{ $name:lit $value:flo },{ $name:lit $value:lit }]
+pattern { $color:$colors $method:color_methods(,)... } => {
+    if(!Array.isArray(this.method)){
+        return `${this.color}.${this.method.name}(${this.method.value})` ;
+    }
+    return `${this.color}${this.method.map((v)=>{ return `.${v.name}(${v.value})` }).join("") }.toCss()`;
+}
+pattern { $color:$colors } => {
+    return `${this.color}.toCss()`
+}
+
+
+color red = 45;
+var pink = red lightenByAmount 21, saturateByRatio 0.2;
+document.body.style.backgroundColor = red;
+$("h2").css({ color: pink });

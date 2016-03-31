@@ -1,0 +1,49 @@
+
+class elseif { else if ($condition...) {$body...} }
+class else [{ $elseif:elseif },{ else {$body...} },{}]
+class if { if ($condition...) {$body...} }
+pattern { $if:if $elses:else( )... } => {
+    var result = `try{ ${this.if} }`;
+    var elses;
+    var casefn = function (cond){
+                    var result;
+                    if( cond.elseif ){
+                        result = `try{
+                            if(${cond.elseif.condition}){
+                                ${cond.elseif.body}
+                                }else{ throw "error"; }
+                            }`;
+                    }else if ( (cond+"").trim() !== "") {
+                        result = `try{
+                                ${cond.body}
+                        }`;
+                    }
+                return result;
+        }
+    if(this.elses){
+        elses = this.elses.map(casefn).filter((v)=>{ return v  });
+        var len = elses.length-1;
+        elses = elses.reduce(function(a,b,i){
+            var c = b+"catch(e){}";
+            if(i==len){
+                var result = `${a}catch(e){ ${c} }`;
+                return result;
+            }
+            var result = `${a}catch(e){ ${b} `;
+            return result;
+        }, result) ;
+        var back_bracks = new Array(len).fill("}").join("");
+        return elses+back_bracks;
+    }
+    return result+"catch(e){ console.log('comeone man')}";
+}
+
+var a = null;
+
+if( a.throw_an_error ){
+    console.log("something is wrong with this compiler")
+}else if ( a.this_wont_work ) {
+    console.log("it doesnt even matter")
+} else{
+    console.log("All Good!")
+}

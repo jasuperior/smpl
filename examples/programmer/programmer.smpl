@@ -1,10 +1,10 @@
 class arg [{ $name:lit : $type:lit } , { $name:lit }]
 capture decl { A $name:lit has a $props:arg(,)... }=>{
     var props = this.props;
-    // console.log("after the match of the decl::::::::::::::::::::::::");
+    /*console.log("after the match of the decl::::::::::::::::::::::::", props);*/
     if(!props) return null;
     var result =  `function ${this.name} ( ${this.props.map((v)=>{ return v.name })}){
-        ${this.props.map((v) => "this."+v.name +" = "+(v.type?("typeof "+v.name+" == '"+v.type.trim()+"' && "):"")+v.name  ).join(";n")};
+        ${this.props.map((v) => "this."+v.name +" = "+(v.type?("typeof "+v.name+" == '"+v.type.trim()+"' && "):"")+v.name  ).join(";")};
      }`
      this.addCapture(this.name+"s")
      this.addCapture(this.name+"")

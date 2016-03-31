@@ -1,7 +1,7 @@
 function Programmer(name, age, skills) {
 	this.name = typeof name == "string" && name;
-	nthis.age = typeof age == "number" && age;
-	nthis.skills = skills;
+	this.age = typeof age == "number" && age;
+	this.skills = skills;
 };
 var programmers = [
 		new Programmer("jamel", 10, "nothing"),
