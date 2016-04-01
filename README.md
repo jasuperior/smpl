@@ -31,8 +31,8 @@ SMPL is built around an entirely new paradigm which is inspired by the rise of t
             * [Variable Classes](#variable-classes)
             * [Repeats](#repeats)
             * [Groups](#groups)
-            * Whitespace
-        * Transform Context
+            * [Whitespace](#whitespace)
+        * [Transform Context](#transform-context)
         * Pattern Declaration
             * Standard Declaration
             * Named Declaration
@@ -151,13 +151,77 @@ If you happen to have a repeating pattern which is separated by a delimiter such
 This will match `hello beautiful, amazing, SIMPLE world `. *Note, the delimiters only match between the literals and there are no leading or trailing commas.*
 
 > ##### Repeats and Encapsulating Delimiters
-> When using delimiters which encapsulate values `()` `[]` `{}` , variables, and repeats in conjunction, space can affect the meaning of your pattern. Placing space between the delimiters and the repeat like, `( $match... )` it performs a non greedy match to the first appearance of the closing brace. If there are no spaces `{$match...}` performs a greedy match, until the number of open braces matches the number of closing braces.
+> When using delimiters which encapsulate values `()` `[]` `{}` , variables, and repeats in conjunction, space can affect the meaning of your pattern. Placing space between the delimiters and the repeat like, `( $match... )` it performs a non greedy match to the first appearance of the closing brace. If there are no spaces `($match...)` performs a greedy match, until the number of open braces matches the number of closing braces.
 > ###### Example
 > ```javascript
 //Given
-{a: { b: { }, c: {} }}
+( a ( b )( c) )
 ```
-> The former pattern would match `{a:{b:{}` while the latter would match the entire object `{a:{b:{},c:{}}}`
+> The former pattern would match `(a(b)` while the latter would match the entire object `( a ( b )( c) )`
+
+#### Groups
+For instances where you want to match a complex pattern without declaring a separate pattern, *pattern groups* are you companion. They are initialized also using the `$` symbol then proceeded by your pattern enclosed in `()` parenthesis.
+
+    { hello $( $place:lit ) }
+
+Pattern groups act like a variable, meaning you can use it in repeats in much the same fashion.
+
+    { hello $( $place)(,)... }
+
+Results matched from a pattern group get placed inside the `group` variable of your context, and denoted by [a index number 0-n](#transform-context) that represents the order which it appeared in your pattern.
+#### Whitespace
+It's important to note, that whitespace is not matched literally as it appears in your pattern. Every time there is whitespace detected in your pattern, it is counted as 0 or more spaces.
+
+    { hello world }
+    //matches hello world
+    //hello             world
+    /*
+    hello
+    world
+    */
+
+### Transform Context
+When a pattern template has been matched against, the result is applied to the context of your transform function. It can be accessed via the `this` keyword or by simply calling the name of your variables directly within the context. The syntax used within the context of your transform is javascript. Any value you wish to replace with your match, you would return from the context. A transform context is also denoted using the `{}` curly braces.
+
+    pattern { hello world } => {
+        //transform context
+        return "goodbye planet"
+    }
+
+*more on [pattern declarations](#pattern-declarations) later*
+
+Any variables declared in the pattern will be applied to a variable of the same name, minus `$` dollar sign, in the context.
+
+    //patterns.smpl
+        pattern { hello $place:lit } => {
+            return this.place;
+        }
+        pattern { hello $place:lit } => {
+            return place; //these are functionally equivalent
+        }
+
+    //hello-world.js
+        hello world //returns world;
+
+All variables called within a group, can be found in the `groups` array by the index it is found in the template.
+
+    pattern { hello $( $place:lit ) } => {
+        return groups[0].place
+    }
+
+This will execute in the same fashion as the examples above.
+
+Nested [named patterns ](#named-patterns) will nest objects as you'd expect.
+
+    pattern place { $city:lit , $state:lit } => { return null }
+    pattern { hello $place:place } => {
+        return place.city;
+    }
+
+
+    hello baltimore, md //evaluates to baltimore
+
+as you can see, `city` is a property of `place` as we've defined it. 
 
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
