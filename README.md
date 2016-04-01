@@ -28,8 +28,9 @@ SMPL is built around an entirely new paradigm which is inspired by the rise of t
     * [Syntax](#syntax)
         * [Pattern Template](#pattern-template)
             * [Pattern Variables](#pattern-variables)
-            * Variable Classes
-            * Repeats
+            * [Variable Classes](#variable-classes)
+            * [Repeats](#repeats)
+            * [Groups](#groups)
             * Whitespace
         * Transform Context
         * Pattern Declaration
@@ -99,7 +100,57 @@ Every pattern must contain a template, with which it can perform its matches. A 
 It matches the appearance of the literals "hello" and "world".  
 You'll obviously want to do much more than match inputs literally. For more dynamic features, pattern variables are needed.
 #### Pattern Variables
-The *pattern variable* gives you the ability to store pieces of the match, into properties of the context of the [pattern's transform](#transform-context).
+The *pattern variable* gives you the ability to store pieces of the match, into properties of the context of the [pattern's transform](#transform-context). It is denoted by a `$` dollar sign followed by a literal. i.e. `$VarName`
+
+A pattern variable must be declared with a [variable class](#variable-classes). variable classes are denoted by a `:` colon and the name of the class. More on that below.
+
+In total, when using a pattern variable, it should look like this.
+
+    { I am $age:num years old }
+    //$age is our variable
+    //num is our class, which in this case represents a number class.
+
+This will match an input such as `I am 10 years old` where `10` would be stored into our variable `age`
+#### Variable Classes
+The *variable class*, as stated above, represents a primitive which can be used in your match. There are 9 classes in total.
+    * `str` a string, denoted using either ` '' ` ` "" ` or ` `` ` characters.
+    * `num` any positive or negative whole integer. `9` `-90` `187912`
+    * `flo` a float type integer with an optional decimal point `10.1` `100` `1423.32`
+    * `lit` an identifier constructed of legal alphanumeric characters and symbols `name` `camelCase` `under_scored` `m1x3d_numb3r`
+    * `punc`  punctuators that are not also operators `.` `,` `:` `?` `!` `;`
+    * `op`  math operators `+` `*` `^` `%` `&`
+    * `delim` delimiters `()` `[]` `{}`
+    * `sym`  other miscellaneous symbols `#` `$` `~` `@`
+    * **`bracket`** a special class for matching nested brackets `{...}`
+
+Mix and match these to create powerful and dynamic patterns.
+>Repeats can cause some unexpected results and performance costs when dealing with nested structures like brackets. To combat this, we have created a special bracket class that makes some smart decisions based on the context of the pattern it is being placed in. **Always use the bracket class** when trying to match repeating brackets `{...},{...},{...}`
+
+#### Repeats
+Variables and Classes must always be paired together, except for when you use a repeat, denoted using a `...` ellipses after your variable. A repeat can mean different things depending on how you use it. The simplest form is to merely attach it after a literal.
+
+    {hello... world}
+
+this will match `hello hello hello hello world`. But that's not very fun. If you want to make something a bit more dynamic with you repeats, initialize it with a variable.
+
+    { hello $adjectives... world }
+
+This will first match `hello` then match anything until it reaches the first appearance of `world`. i.e. `hello beautiful, amazing world`
+
+If you would like to only match a specific class repeatedly, use the aforementioned `$var:class` syntax followed by a repeat.
+
+    { hello $adjs:lit... world }
+
+This will also match `hello beautiful amazing world`.
+
+If you happen to have a repeating pattern which is separated by a delimiter such as a `,` comma, declare you delimiter in parenthesis between your variable and your repeat `$var(,)...`. This works using a bare variable or one initialized with a class.
+
+    { hello $adjs:lit(,)... world }
+
+This will match `hello beautiful, amazing, SIMPLE world `. *Note, the delimiters only match between the literals and there are no leading or trailing commas.*
+
+> ##### Repeats and Enclosing Delimiters
+> When using delimiters which encapsulate values `()` `[]` `{}` and repeats in conjunction...
 
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
