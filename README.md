@@ -152,7 +152,10 @@ This will match `hello beautiful, amazing, SIMPLE world `. *Note, the delimiters
 
 > ##### Repeats and Enclosing Delimiters
 > When using delimiters which encapsulate values `()` `[]` `{}` and repeats in conjunction, space can affect the meaning of your pattern.
->   some code
+>  ```
+some code
+
+```
 
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
