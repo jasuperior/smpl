@@ -33,10 +33,10 @@ SMPL is built around an entirely new paradigm which is inspired by the rise of t
             * [Groups](#groups)
             * [Whitespace](#whitespace)
         * [Transform Context](#transform-context)
-        * Pattern Declaration
-            * Standard Declaration
-            * Named Declaration
-            * Alternation
+        * [Pattern Declaration](#pattern-declaration)
+            * [Standard Declaration](#standard-declaration)
+            * [Named Declaration](#named-declaration)
+            * [Alternation](#alternation)
             * ~~Priority~~ (update: roadmap v0.1.x)
         * Class Declaration
         * Capture Declaration
@@ -188,7 +188,7 @@ When a pattern template has been matched against, the result is applied to the c
         return "goodbye planet"
     }
 
-*more on [pattern declarations](#pattern-declarations) later*
+*more on [pattern declarations](#pattern-declaration) later*
 
 Any variables declared in the pattern will be applied to a variable of the same name, minus `$` dollar sign, in the context.
 
@@ -221,7 +221,41 @@ Nested [named patterns ](#named-patterns) will nest objects as you'd expect.
 
     hello baltimore, md //evaluates to baltimore
 
-as you can see, `city` is a property of `place` as we've defined it. 
+as you can see, `city` is a property of `place` as we've defined it.
+
+In addition to giving you an objectified version of your pattern as context variables, you are also given access to a global scope. In the current version, scope maintains state between files in a single call to `compile` from the [CLI](#command-line-tool). The scope contains a set of functions and objects provided to you by the compiler to help you create more dynamic patterns, as well as access to variables defined in [compile time code-blocks](#compile-time-code-blocks). *be aware that in the transform context, although you can get and mutate values already defined on the scope, you do not have the ability to declare new variables on the scope. All variables declared in the transform context are locally defined*
+
+The compiler provides you with the following variables:
+
+* `compiler` gives you access to the raw [compiler object](#compiler) and all of its methods
+
+And the following methods:
+
+* `compile( input:str )` runs a local compile of the provided input. *(meta!!!)*
+* `addPattern( template,:str, transform:funct, options:obj)` manually adds a pattern to the compiler.[ *(more in Standard Lib section)* ](#compiler)
+* `prepend( input:str )` prepends the provided string, uncompiled, to the top of your compiled document.
+* `append( input:str )` appends the provided string, uncompiled, to the bottom of your compiled document.
+* `unpend( input:str )` deletes all appended and prepended strings.
+
+### Pattern Declaration
+The entry point to developing your compiler is a pattern declaration. It tells the compiler what you would like to match, and how you would to match it by combining [pattern templates](#pattern-template) with [transform contexts](#transform-context).
+
+#### Standard Declaration
+The easiest and most basic form of a declaration is a standard one. It is denoted using the `pattern` keyword followed by a template, `=>` operator, then a transform.
+
+    pattern     { hello world }     =>      { return `console.log("hello world")` }
+    //keyword  -> template    -> op   ->   transform
+
+The above pattern will read in an instance of *hello world* and replace it with *console.log("hello world")*.  The form of declaring patterns is powerful in that it allows for mutations and conditionals to happen in the body,  and return dynamic results.
+```javascript
+    pattern {hello $place:lit } => {
+        if( place == "world" ) return `hello(${place})`
+        else return `greetings("${place.replace("b","B")}")`
+    }
+    hello world //compiles to hello(world)
+    hello baltimore //compiles to greetings("Baltimore")
+```
+
 
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
