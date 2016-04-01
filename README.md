@@ -152,11 +152,12 @@ This will match `hello beautiful, amazing, SIMPLE world `. *Note, the delimiters
 
 > ##### Repeats and Encapsulating Delimiters
 > When using delimiters which encapsulate values `()` `[]` `{}` , variables, and repeats in conjunction, space can affect the meaning of your pattern. Placing space between the delimiters and the repeat like, `( $match... )` it performs a non greedy match to the first appearance of the closing brace. If there are no spaces `{$match...}` performs a greedy match, until the number of open braces matches the number of closing braces.
-> **example**
-> ```  
+> ###### Example
+> ```javascript
+//Given
 {a: { b: { }, c: {} }}
 ```
-> jamel cole
+> The former pattern would match `{a:{b:{}` while the latter would match the entire object `{a:{b:{},c:{}}}`
 
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
