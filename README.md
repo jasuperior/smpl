@@ -87,7 +87,7 @@ SMPL, amongst other things, have made tremendous effort to simplify the process 
 ### The Compiler
 Knowing about the compiler isn't necessary, but it helps you understand whats going on when you are building your patterns. Each pattern is essentially a special tokenized version of regular expression. They can have a name, a priority, and a transform (more about each below) .
 
-Each round of the compile loop, checks each pattern to see if there is a match in the document. the match whose position is closest to the cursor will advance the cursor to its position, then will fire the appropriate transform context. The context is given a result object which contains the matched string, and properties mapping to those found in the [pattern temple](#pattern-template).
+Each round of the compile loop, checks each pattern to see if there is a match in the document. the match whose position is closest to the cursor will advance the cursor to its position, then will fire the appropriate transform context. The context is given a result object which contains the matched string, and properties mapping to those found in the [pattern template](#pattern-template).
 
 Patterns must return a string or string-like object. Patterns which do not return a result (false, null, or undefined), will be excluded from all the following cycles, until a match is found for another pattern-- then the excluded pattern will be returned to the compile loop.
 
@@ -151,7 +151,8 @@ If you happen to have a repeating pattern which is separated by a delimiter such
 This will match `hello beautiful, amazing, SIMPLE world `. *Note, the delimiters only match between the literals and there are no leading or trailing commas.*
 
 > ##### Repeats and Enclosing Delimiters
-> When using delimiters which encapsulate values `()` `[]` `{}` and repeats in conjunction...
+> When using delimiters which encapsulate values `()` `[]` `{}` and repeats in conjunction, space can affect the meaning of your pattern.
+>   some code
 
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
