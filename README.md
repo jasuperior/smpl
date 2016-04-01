@@ -114,15 +114,15 @@ This will match an input such as `I am 10 years old` where `10` would be stored 
 #### Variable Classes
 The *variable class*, as stated above, represents a primitive which can be used in your match. There are 9 classes in total.
 
-    * `str` a string, denoted using either ` '' ` ` "" ` or ` `` ` characters.
-    * `num` any positive or negative whole integer. `9` `-90` `187912`
-    * `flo` a float type integer with an optional decimal point `10.1` `100` `1423.32`
-    * `lit` an identifier constructed of legal alphanumeric characters and symbols `name` `camelCase` `under_scored` `m1x3d_numb3r`
-    * `punc`  punctuators that are not also operators `.` `,` `:` `?` `!` `;`
-    * `op`  math operators `+` `*` `^` `%` `&`
-    * `delim` delimiters `()` `[]` `{}`
-    * `sym`  other miscellaneous symbols `#` `$` `~` `@`
-    * **`bracket`** a special class for matching nested brackets `{...}`
+* `str` a string, denoted using either ` '' ` ` "" ` or ` `` ` characters.
+* `num` any positive or negative whole integer. `9` `-90` `187912`
+* `flo` a float type integer with an optional decimal point `10.1` `100` `1423.32`
+* `lit` an identifier constructed of legal alphanumeric characters and symbols `name` `camelCase` `under_scored` `m1x3d_numb3r`
+* `punc`  punctuators that are not also operators `.` `,` `:` `?` `!` `;`
+* `op`  math operators `+` `*` `^` `%` `&`
+* `delim` delimiters `()` `[]` `{}`
+* `sym`  other miscellaneous symbols `#` `$` `~` `@`
+* **`bracket`** a special class for matching nested brackets `{...}`
 
 Mix and match these to create powerful and dynamic patterns.
 >Repeats can cause some unexpected results and performance costs when dealing with nested structures like brackets. To combat this, we have created a special bracket class that makes some smart decisions based on the context of the pattern it is being placed in. **Always use the bracket class** when trying to match repeating brackets `{...},{...},{...}`
