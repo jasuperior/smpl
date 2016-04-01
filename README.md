@@ -113,6 +113,7 @@ In total, when using a pattern variable, it should look like this.
 This will match an input such as `I am 10 years old` where `10` would be stored into our variable `age`
 #### Variable Classes
 The *variable class*, as stated above, represents a primitive which can be used in your match. There are 9 classes in total.
+
     * `str` a string, denoted using either ` '' ` ` "" ` or ` `` ` characters.
     * `num` any positive or negative whole integer. `9` `-90` `187912`
     * `flo` a float type integer with an optional decimal point `10.1` `100` `1423.32`
