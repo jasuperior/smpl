@@ -38,16 +38,16 @@ SMPL is built around an entirely new paradigm which is inspired by the rise of t
             * [Named Declaration](#named-declaration)
             * [Alternation](#alternation)
             * ~~Priority~~ (update: roadmap v0.1.x)
-        * Class Declaration
-        * Capture Declaration
-        * Pattern Expression
-        * Compile-Time Code Block
-    * CLI
+        * [Class Declaration](#class-declaration)
+        * [Capture Declaration](#capture-declaration)
+        * [Compile-Time Code Block](#compile-time-code-blocks)
+    * [CLI](#command-line-tool)
+    * [Package Commands](#package-commands)
     * Standard Lib
         * Compiler
         * Source
-* Roadmap
-* Contributing
+* [Roadmap](#roadmap)
+* [Contributing](#contributing)
 
 ## Getting Started
 Simply install the package globally to get the command line tool
@@ -138,17 +138,17 @@ this will match `hello hello hello hello world`. But that's not very fun. If you
 
 This will first match `hello` then match anything until it reaches the first appearance of `world`. i.e. `hello beautiful, amazing world`
 
-If you would like to only match a specific class repeatedly, use the aforementioned `$var:class` syntax followed by a repeat.
-
-    { hello $adjs:lit... world }
-
-This will also match `hello beautiful amazing world`.
-
-If you happen to have a repeating pattern which is separated by a delimiter such as a `,` comma, declare you delimiter in parenthesis between your variable and your repeat `$var(,)...`. This works using a bare variable or one initialized with a class.
+If you want to be more specific with what is repeating, it uses a slightly different syntax. If you want to specify a particular class to repeat, declare your pattern var `$var:class` and proceed it with a `()` parenthesis then your repeat. Inside the parenthesis goes a delimiter such as `,`, which separates the class.
 
     { hello $adjs:lit(,)... world }
 
 This will match `hello beautiful, amazing, SIMPLE world `. *Note, the delimiters only match between the literals and there are no leading or trailing commas.*
+
+delimiters can be absolutely anything, even an entire sentence.
+
+    { $count:num(bottles of beer on the wall)...}
+
+This would match `99 bottles of bear on the wall 98 bottles of beer on the wall 97 bottles of beer on the wall...`
 
 > ##### Repeats and Encapsulating Delimiters
 > When using delimiters which encapsulate values `()` `[]` `{}` , variables, and repeats in conjunction, space can affect the meaning of your pattern. Placing space between the delimiters and the repeat like, `( $match... )` it performs a non greedy match to the first appearance of the closing brace. If there are no spaces `($match...)` performs a greedy match, until the number of open braces matches the number of closing braces.
@@ -180,6 +180,7 @@ It's important to note, that whitespace is not matched literally as it appears i
     world
     */
 
+Also keep in mind that whitespace is a character, in fact, it even has its own secret character class `$var:whitespace`. You'll probably never have a good reason to use the class, which is why it's not written in the pattern class section, but, why this is important is because when doing repeats, and empty `()` or the equivalent `( )` are valid delimiters.
 ### Transform Context
 When a pattern template has been matched against, the result is applied to the context of your transform function. It can be accessed via the `this` keyword or by simply calling the name of your variables directly within the context. The syntax used within the context of your transform is javascript. Any value you wish to replace with your match, you would return from the context. A transform context is also denoted using the `{}` curly braces.
 
@@ -191,7 +192,7 @@ When a pattern template has been matched against, the result is applied to the c
 *more on [pattern declarations](#pattern-declaration) later*
 
 Any variables declared in the pattern will be applied to a variable of the same name, minus `$` dollar sign, in the context.
-
+```javascript
     //patterns.smpl
         pattern { hello $place:lit } => {
             return this.place;
@@ -199,10 +200,13 @@ Any variables declared in the pattern will be applied to a variable of the same 
         pattern { hello $place:lit } => {
             return place; //these are functionally equivalent
         }
-
+        pattern { goodbye } => { return this //contains the entire match  }
+```
+```javascript
     //hello-world.js
         hello world //returns world;
-
+        goodbye //returns goodbye (no change)
+```
 All variables called within a group, can be found in the `groups` array by the index it is found in the template.
 
     pattern { hello $( $place:lit ) } => {
@@ -255,7 +259,112 @@ The above pattern will read in an instance of *hello world* and replace it with 
     hello world //compiles to hello(world)
     hello baltimore //compiles to greetings("Baltimore")
 ```
+#### Named Declaration
+A named declaration allows you to reference the pattern in another pattern by name. The syntax is similar to a standard declaration, with the exception of placing a lit between the pattern keyword and the template.
 
+    pattern  hello   { hello world }     =>      { return `console.log("hello world")` }
+    //keyword ->name -> template    -> op   ->   transform
+
+The above pattern is functionally equivalent to declaring it without its name, however, now it can be referenced by another pattern.
+```javascript
+    pattern age { $age:num years old } => { return age }
+    pattern { I am $age:age } => {
+        return `{ age: ${age.transformPattern() }}`
+    }
+    I am 12 years old //compiles to {age:12}
+```
+Notice the use of the method `transformPattern()`. This method is used to perform local transforms of a matched pattern. In this case, the variable `age` before we transformed it, contained `12 years old`. By calling the method, it calls the transform context which you defined for the `age` pattern.
+```javascript
+    pattern age { $age:num years old } => { return age }
+    pattern { I am $age:age } => {
+        return `{ age: ${age.T() }}`
+    }
+    I am 12 years old //compiles to {age:12}
+```
+`T()` is an alias for `transformPattern()`.
+#### Alternation
+If you need multiple patterns to be classified under a single name, use the alternation syntax. This will take a group of templates and test against the first to match. it is declared the same as a standard or named pattern, but rather than providing a single pattern template, you give it an array denoted using `[]` square brackets, and your templates comma separated inside.
+```javascript
+    pattern [{...},{...},{...}] => { ... }
+    pattern name  [{...},{...},{...}] => { ... }
+```
+As they use alternation, and require a more elaborate construction, there is a slight performance cost to using these. *use sparingly and try to use variables to acheive the same result where possible*
+
+Notice also that they operate on a single context, so patterns with differing set of variables must undergo a conditional check to get desired results.
+```javascript
+    pattern hello [{hello world},{hola mundo},{gutentag $worldWord:lit}] => {
+        if(this.worldWord) return `hello(translate('${worldWord}'))`
+        return "hello('world')"
+    }
+    hello world //hello("world")
+    gutentag blahblah //hello(translate('blahblah'))
+```
+
+### Class Declaration
+If you wanted to create a pattern that matches, but there is no need for any transform logic, use the class declaration. Its similar to declaring a named pattern, but without the transform parts.
+
+    class name {...}
+    class name [{...},{...},{...}]
+
+This is functionally equivalent to declaring a pattern that returns `null`, except that it comes with a performance boost to the compiler. Since it doesnt have a transform context, the compiler doesnt even consider it for a match in the loop. Classes are merely used for referencing patterns in others by passage of a variable.
+
+> Use as much as possible. Patterns which return null, albeit performing the same task, causes the compile loop to take an additional cycle to negate it. By using a class, it isnt even considered, thus saving resources. (read the [compiler section](#the-compiler) for more on the compile loop).
+
+### Capture Declaration
+This is, by far, the most stand-out feature that SMPL provides. The capture declaration allows you to declare a pattern that not only operates like a normal pattern, but also gives you a new setter method `addCapture()` for adding alternations to a special form of the pattern, which can be used in other patterns.
+
+The best way to illustrate this is through demonstration
+```javascript
+    capture var { var $name:lit } => {
+        addCapture(name);
+    }
+    pattern { $object:$var $props:lit()... } => {
+        return `${this.object}.${this.props.join(".")}`
+    }
+    boy name first //compiles to boy name first
+    var boy = {
+        name: {
+            first: "john",
+            last: "smith"
+        }
+    }
+    boy name first // compiles to boy.name.first
+```
+Notice that although the capture is declared with `var` as a name, it is referenced using `$var`. This is because the pattern `var` is the pattern which you've declared for the capture (`{var $name:lit}`). So if you did this instead.
+```javascript
+    pattern { $object:var $props:lit()... } => {
+        return `${this.object}.${this.props.join(".")}`
+    }
+    var boy = ...
+    boy name first // compiles to boy name first
+    var boy name first //compiles to var boy.name.first
+```
+You'll notice it doesnt match things as you'd expect. The compiler will lookup your capture template directly, and use that to match against -- which will subsequently add another instance of `boy` to the captures list. The values you place into `addCapture` are stored, instead in the `$` affixed version of the captures name.
+
+> `addCapture( pattern:PatternTemplateString)` add capture takes a single input, a pattern template. However, inside the context of the transform, pattern templates must be given in the form of a string.
+
+### Compile-Time Code Block
+There are times when you need to create global variables, or require other libraries into your compiler. Adding other npm modules, especially, can be very handy in making your compiler seem almost magical. Code blocks are initialized by surrounding your block with `---`.
+ ```javascript
+ // .\examples\language_features
+     --- //code-block
+         prepend("var Color = require('color');");
+         unpend();
+     ---
+     capture colors [{ color $name:lit = $value:str },{ color $name:lit = $value:flo }] => {
+         this.addCapture(this.name);
+         return ` var ${this.name} = new Color(${this.value})`;
+     }
+ ```
+ All variables declared in a code block are locally bound. If you would like to create a global variable, for use in patterns, use the `ctx` keyword instead.
+```javascript
+    --- ctx sweet = require("sweet.js"); ---
+    pattern { $program... } => {
+        sweet.compile(program); //compiler-in-compiler. INCEPTION!
+    }
+```
+Variables declared using the `ctx` keyword are shared between all documents in a given compile.
+> **NOTE** because files given to the command line tool can compile in any order, it is wise that you do any variable declarations in a module, rather than in-document. This will ensure that all the documents receive the variable and its not missing from the context of any unexpectedly.
 
 ## Command Line Tool
 Once you have constructed your documents, use the command line tool to compile it into your target language.  you start with prompt `smpl`
@@ -297,6 +406,11 @@ If you would like to watch a file or directory, place the `-w` flag in the query
 
         $   smpl c ./example/*.example -o ./build -w
 
+##### --run || -r
+If you dont want to compile it to a file, but want to run the file in the terminal instead (given that the resultant file is javascript), use the `-r` flag.
+
+                $   smpl c ./example/*.example -o ./build -r
+
 ##### --debug || -d
 `-d` outputs log messages to help you figure out where something may be going wrong.
 
@@ -330,20 +444,14 @@ This will allow you to call commands without the need for the long query strings
     //same as
     $   smpl c ./examples/**/*.smpl
 
-> ## Be Aware
-> This is still in Pre-Alpha stage. I literally built this in a couple days, so i wouldn't recommend using it in production just yet. I haven't even written any tests for it yet. So, use at your own risk.
 
-> That being said, contribute to your hearts desire, I am always open to new ideas and ways in which we can improve this library.  Drop any issues, updates, ideas, etc. in the issues of the git repo and I'll try my best to address it in a timely fashion.
-
-## Roadmap for v0.1.0
-+ Add Support for SourceMaps
-+ ~~Allow for "Group" captures in patterns~~
-+ ~~Allow For "Grouped" captures in output expressions~~
-+ ~~Allow for "Grouped" Ellipses in patterns~~
-+ ~~Allow for "Grouped" Ellipses in output expression~~
-+ ~~Add Support for Packaged Commands~~
-+ ~~create "Backtrack" Pattern (recursive)~~
-+ Make more in depth examples for different specific domains
-+  Command Line argument for outputting to terminal
-+ Documentation for `required` version of package
-+ Condense core file size
+## Roadmap for v0.2.0
++ Compiler bound patterns (patterns which can use other patterns within its transform context)
++ Numeric Priority for patterns. More precise matches.
++ Modify captures list
++ <smpl-script> web component for react, angular, polymer, & html5 for testing without having to compile.
++ SPC - SMPL Package Control or "space", a customized package manager for SMPL modules.
++ Faster Compile times
++ Custom string matcher to replace regexp
++ Smaller File Sizes. 
++ Less Dependencies
