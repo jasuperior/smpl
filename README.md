@@ -15,7 +15,7 @@
     }
     hello world //compiles to console.log("hello world");
 
-SMPL is built around an entirely new paradigm which is inspired by the rise of transpiling. By giving you the ability to create compile-time patterns and code, you are able to turn that confusing source code, into beatiful, idiomatic glory.  
+SMPL is modular, lightweight, fast, and **cool** of course. It is built around an entirely new paradigm which is inspired by the rise of transpiling. By giving you the ability to create compile-time patterns and code, you are able to turn that confusing source code, into beatiful, idiomatic glory.  
 
 **This is the first stable release. Please keep in mind that a lot has changed since previous versions.**
 
@@ -46,6 +46,7 @@ SMPL is built around an entirely new paradigm which is inspired by the rise of t
     * Standard Lib
         * Compiler
         * Source
+* [Changelog](#changelog)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
 
@@ -444,6 +445,15 @@ This will allow you to call commands without the need for the long query strings
     //same as
     $   smpl c ./examples/**/*.smpl
 
+## Changelog
++ **modified** pattern template syntax
++ **added** functional transform context
++ **added** class type pattern
++ **added** `-r` flag
++ **added** new examples
++ **modified** core parser.js
++ **added** new cursor with line and column information.
++ **added** compile-time code blocks and scope 
 
 ## Roadmap for v0.2.0
 + Compiler bound patterns (patterns which can use other patterns within its transform context)
@@ -453,5 +463,5 @@ This will allow you to call commands without the need for the long query strings
 + SPC - SMPL Package Control or "space", a customized package manager for SMPL modules.
 + Faster Compile times
 + Custom string matcher to replace regexp
-+ Smaller File Sizes. 
++ Smaller File Sizes.
 + Less Dependencies
