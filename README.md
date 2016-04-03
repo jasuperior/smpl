@@ -8,7 +8,7 @@
 
  [Subscribe to our User's Mailing List](https://groups.google.com/forum/#!forum/jasuperior) |  [Subscribe to our Dev Forum](https://groups.google.com/forum/#!forum/smpl-devs)
 
- SMPL (pronounced "simple") is the compiler for the transpiling age. Using an easy to learn syntax, compile-time scope, and a command line interface, it allows you to build a dynamic and modular transpiler in minutes.
+ SMPL (pronounced "simple") is the compiler  for the transpiling age. Using an easy to learn syntax, compile-time scope, and a command line interface, it allows you to build a dynamic and modular transpiler in minutes.
 
     pattern { hello world } => {
         return `console.log("hello world"); `
@@ -154,11 +154,9 @@ This would match `99 bottles of bear on the wall 98 bottles of beer on the wall 
 > ##### Repeats and Encapsulating Delimiters
 > When using delimiters which encapsulate values `()` `[]` `{}` , variables, and repeats in conjunction, space can affect the meaning of your pattern. Placing space between the delimiters and the repeat like, `( $match... )` it performs a non greedy match to the first appearance of the closing brace. If there are no spaces `($match...)` performs a greedy match, until the number of open braces matches the number of closing braces.
 > ###### Example
-> ```javascript
-//Given
-( a ( b )( c) )
-```
+> ` / ** Given **/    ( a ( b )( c) ) `
 > The former pattern would match `(a(b)` while the latter would match the entire object `( a ( b )( c) )`
+
 
 #### Groups
 For instances where you want to match a complex pattern without declaring a separate pattern, *pattern groups* are you companion. They are initialized also using the `$` symbol then proceeded by your pattern enclosed in `()` parenthesis.
@@ -453,7 +451,7 @@ This will allow you to call commands without the need for the long query strings
 + **added** new examples
 + **modified** core parser.js
 + **added** new cursor with line and column information.
-+ **added** compile-time code blocks and scope 
++ **added** compile-time code blocks and scope
 
 ## Roadmap for v0.2.0
 + Compiler bound patterns (patterns which can use other patterns within its transform context)
