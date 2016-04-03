@@ -1,6 +1,6 @@
 {
   "name": "smpl.js",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "lib/dsl.js",
   "scripts": {
@@ -23,7 +23,19 @@
     "pretty-js": "^0.1.8",
     "vorpal": "^1.10.8"
   },
-  "keywords": ["javascript","pattern matching","pattern matcher","compiler","parser generator","generator","polyglot","transpile","simple","easy","peg"],
+  "keywords": [
+    "javascript",
+    "pattern matching",
+    "pattern matcher",
+    "compiler",
+    "parser generator",
+    "generator",
+    "polyglot",
+    "transpile",
+    "simple",
+    "easy",
+    "peg"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/jasuperior/smpl.git"
