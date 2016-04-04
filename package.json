@@ -19,8 +19,8 @@
     "gulp-fn": "0.0.0",
     "gulp-log-capture": "0.0.6",
     "gulp-watch": "^4.3.5",
-    "named-js-regexp": "^1.3.1",
     "pretty-js": "^0.1.8",
+    "smpl-named-js-regexp": "^1.0.0",
     "vorpal": "^1.10.8"
   },
   "keywords": [

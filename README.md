@@ -1,4 +1,4 @@
-# SMPL v0.1.0a
+# SMPL v0.1a
 ### The easiest and most powerful little compiler, for the transpiling age.
 > simplify your code, increase readability, become more productive. This is the first compiler built for the purpose of transpiling first.
 
