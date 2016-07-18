@@ -1,0 +1,6 @@
+pattern { hello $space:newline world } => { return `console.log("hello world")` }
+hello world //compiles to console.log("hello world")
+hello    world /// doesnt compile;
+;
+hello
+world //doesnt compile

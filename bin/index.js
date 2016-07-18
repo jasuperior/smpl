@@ -44,8 +44,9 @@ v.command("compile <dir>", "Parses the files at the given directory (node glob)"
         }
 
         converted.pipe(fn(function( file ){
-            var str = file.contents.toString('utf8');
+
             try{
+            var str = file.contents.toString('utf8');
             var content = compiler.compile(" "+str, a.options.debug); ++num;
             }catch(e){
                 var content = ""; ++num;

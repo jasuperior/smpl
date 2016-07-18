@@ -1,0 +1,7 @@
+pattern 5 { hello world } => {
+    return `not this`
+}
+pattern 2 world { hello world } => {
+    return `this`
+}
+hello world;
